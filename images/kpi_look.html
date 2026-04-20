@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+  canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  #year-display {
+    position: absolute;
+    bottom: 5%; right: 4%;
+    font-size: clamp(40px, 12vw, 160px);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    color: rgba(255,255,255,0.05);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="year-display">2016</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const yearDisplay = document.getElementById('year-display');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', () => { resize(); });
+
+const actual   = [38852824,53854497,28613662,23469879,39178384,36409394,29724024,52869272,67115586,139044127,107601966,99905951,88836981,52628623,50120909,38931733,63318737,50929211,55812841,70446391,81316735,119907836,106308701,98871064,82688587,90477264,80460523,70108257,91931673,87033337,79825309,105002404,116800787,156846654,147024780,139361876,127814954,150792633,130944188,121623227,145303605,134194654,124518001,149332389,158069424,181204063,175945613,158806158];
+const forecast = [38852824,10398725,2985377,-3920086,12200451,661177,381535,1112857,31934726,57741955,53537807,105833659,76295242,36880603,25302896,7899189,28221482,4843775,-7959932,7662361,20484654,51775329,43347622,44619915,101765843,37024960,59097841,41922722,26571603,56596484,34729865,25278746,46103627,39728508,79555284,69570165,117825047,101441928,76506809,56423690,37264571,53581452,25618333,11859214,21976095,12792976,54694592,42129473];
+
+const N = actual.length;
+const allVals = [...actual, ...forecast];
+const minV = Math.min(...allVals);
+const maxV = Math.max(...allVals);
+
+const years = ['2016','2017','2018','2019','2020'];
+const yearStarts = [0, 5, 17, 29, 41];
+
+function getW() { return canvas.width; }
+function getH() { return canvas.height; }
+function getPAD() {
+  const W = getW(), H = getH();
+  return { top: H*0.15, bottom: H*0.12, left: W*0.04, right: W*0.04 };
+}
+
+function xOf(i) {
+  const P = getPAD();
+  return P.left + (i / (N-1)) * (getW() - P.left - P.right);
+}
+function yOf(v) {
+  const P = getPAD(), H = getH();
+  return P.top + (H - P.top - P.bottom) - ((v - minV) / (maxV - minV)) * (H - P.top - P.bottom);
+}
+
+function getYearFromIdx(idx) {
+  for (let i = yearStarts.length - 1; i >= 0; i--) {
+    if (idx >= yearStarts[i]) return years[i];
+  }
+  return years[0];
+}
+
+function drawLegend() {
+  const W = getW(), H = getH();
+  const P = getPAD();
+  const lx = P.left;
+  const ly = P.top - H * 0.06;
+  const fs = Math.max(14, W * 0.014);
+  const lineLen = W * 0.025;
+  const gap = W * 0.003;
+
+  ctx.font = `700 ${fs}px "Helvetica Neue", Arial, sans-serif`;
+
+  ctx.beginPath();
+  ctx.moveTo(lx, ly); ctx.lineTo(lx + lineLen, ly);
+  ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+  ctx.lineWidth = Math.max(2, W * 0.003);
+  ctx.setLineDash([]);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,0.65)';
+  ctx.textAlign = 'left';
+  ctx.fillText('ACTUAL', lx + lineLen + gap * 3, ly + fs * 0.36);
+
+  const fx = lx + W * 0.12;
+  ctx.beginPath();
+  ctx.moveTo(fx, ly); ctx.lineTo(fx + lineLen, ly);
+  ctx.strokeStyle = '#00e5ff';
+  ctx.lineWidth = Math.max(2, W * 0.003);
+  ctx.setLineDash([8, 6]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(0,229,255,0.65)';
+  ctx.fillText('FORECAST', fx + lineLen + gap * 3, ly + fs * 0.36);
+}
+
+function drawLine(data, color, glowColor, lineW, dashed, prog) {
+  const end = prog * (N - 1);
+  const iEnd = Math.floor(end);
+  const frac = end - iEnd;
+  if (iEnd < 1) return;
+
+  const pts = [];
+  for (let i = 0; i <= iEnd; i++) pts.push([xOf(i), yOf(data[i])]);
+  if (frac > 0 && iEnd < N - 1) {
+    pts.push([
+      xOf(iEnd) + frac * (xOf(iEnd+1) - xOf(iEnd)),
+      yOf(data[iEnd]) + frac * (yOf(data[iEnd+1]) - yOf(data[iEnd]))
+    ]);
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+  ctx.strokeStyle = glowColor;
+  ctx.lineWidth = lineW * 4;
+  ctx.lineJoin = 'round';
+  ctx.setLineDash([]);
+  ctx.filter = 'blur(10px)';
+  ctx.stroke();
+  ctx.filter = 'none';
+
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineW;
+  ctx.lineJoin = 'round';
+  if (dashed) ctx.setLineDash([12, 8]);
+  else ctx.setLineDash([]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  const tip = pts[pts.length - 1];
+  const r = Math.max(4, getW() * 0.004);
+  ctx.beginPath();
+  ctx.arc(tip[0], tip[1], r, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(tip[0], tip[1], r * 2, 0, Math.PI * 2);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.globalAlpha = 0.25;
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+
+function drawZeroLine() {
+  const y0 = yOf(0);
+  ctx.beginPath();
+  ctx.moveTo(getPAD().left, y0);
+  ctx.lineTo(getW() - getPAD().right, y0);
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([]);
+  ctx.stroke();
+}
+
+function drawYearLabels(prog) {
+  const W = getW(), H = getH();
+  const currentIdx = Math.floor(prog * (N - 1));
+  const fs = Math.max(10, W * 0.008);
+  ctx.font = `${fs}px "Helvetica Neue", Arial, sans-serif`;
+  ctx.textAlign = 'left';
+  yearStarts.forEach((si, yi) => {
+    if (si > currentIdx + 1) return;
+    ctx.fillStyle = 'rgba(255,255,255,0.18)';
+    ctx.fillText(years[yi], xOf(si) + 6, H - getPAD().bottom + fs * 1.8);
+  });
+}
+
+let progress = 0;
+const TOTAL = 240;
+const LEAD  = 20;
+
+function easeInOut(t) {
+  return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t;
+}
+
+function animate() {
+  ctx.clearRect(0, 0, getW(), getH());
+  const lineW = Math.max(3, getW() * 0.003);
+
+  const fp = easeInOut(Math.min(progress / TOTAL, 1));
+  const ap = easeInOut(Math.min(Math.max(progress - LEAD, 0) / TOTAL, 1));
+
+  drawZeroLine();
+  drawYearLabels(Math.max(fp, ap));
+  drawLine(forecast, '#00e5ff', 'rgba(0,229,255,0.2)', lineW, true, fp);
+  drawLine(actual, 'rgba(255,255,255,0.92)', 'rgba(255,255,255,0.15)', lineW * 1.2, false, ap);
+  drawLegend();
+
+  yearDisplay.textContent = getYearFromIdx(Math.floor(ap * (N-1)));
+
+  if (progress < TOTAL + LEAD) {
+    progress++;
+    requestAnimationFrame(animate);
+  } else {
+    setTimeout(() => { progress = 0; animate(); }, 2500);
+  }
+}
+
+animate();
+</script>
+</body>
+</html>
