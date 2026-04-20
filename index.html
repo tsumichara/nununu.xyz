@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NU Inc. | BUSINESS / ART</title>
+  <style>
+    :root{
+      --bg:#f5f4f1;
+      --text:#1f1f1c;
+      --muted:#77746d;
+      --line:#d8d4cc;
+      --card:#ffffff;
+      --max:1600px;
+      --pad:48px;
+
+      --art-bg:#e6ff00;
+      --art-text:#000000;
+      --art-accent:#ff00ff;
+      --art-cyan:#00ffff;
+      --art-blue:#1d4fff;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html{ scroll-padding-top:80px; }
+    @media(max-width:720px){ html{ scroll-padding-top:64px; } }
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Noto Sans JP","Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.8;
+      letter-spacing:.02em;
+      transition:background .35s ease,color .35s ease;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img,video{max-width:100%;display:block}
+
+    .container{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+    .eyebrow{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:18px;
+    }
+    .section{padding:40px 0}
+
+    /* =========================
+       TOP NAV / MODE SWITCH
+    ========================= */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(10px);
+      background:rgba(245,244,241,.86);
+      border-bottom:1px solid var(--line);
+      transition:background .35s ease,border-color .35s ease;
+    }
+    .nav-inner{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      padding:12px 48px;
+    }
+    .brand{
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.06em;
+      white-space:nowrap;
+    }
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:24px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 24px;
+      border:1px solid var(--text);
+      border-radius:999px;
+      font-size:13px;
+      font-weight:600;
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .button:hover{background:var(--text);color:var(--bg)}
+
+    .mode-switch{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      transition:background .35s ease,border-color .35s ease;
+    }
+    .mode-switch button{
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font:inherit;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-weight:700;
+      padding:10px 16px;
+      border-radius:999px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .mode-switch button.active{
+      background:var(--text);
+      color:var(--bg);
+    }
+
+    /* =========================
+       BUSINESS MODE
+    ========================= */
+    .mode{display:none}
+    .mode.active{display:block}
+
+    .client-bar{
+      border-bottom:1px solid var(--line);
+      padding:10px 0;
+      font-size:11px;
+      color:var(--muted);
+      letter-spacing:.06em;
+    }
+    .client-bar-label{
+      font-size:10px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-right:16px;
+      opacity:.7;
+    }
+    .hero{
+      padding:40px 0;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:6px;
+      align-items:stretch;
+    }
+    .hero-box-a,
+    .hero-box-b,
+    .white-box{
+      background:#fff;
+      box-shadow:0 1px 3px rgba(0,0,0,.04), 0 4px 24px rgba(0,0,0,.06);
+    }
+    .hero-box-a{
+      padding:28px 52px 44px;
+    }
+    .hero-box-b{
+      padding:28px 44px 40px;
+    }
+    .white-box{
+      padding:40px 48px;
+    }
+    .hero-slideshow{
+      position:relative;
+      overflow:hidden;
+      height:min(80vh, 700px);
+      border-bottom:1px solid var(--line);
+      width:100%;
+    }
+    .hero-slides{
+      display:flex;
+      height:100%;
+      width:100%;
+      transition:transform .6s cubic-bezier(.4,0,.2,1);
+      will-change:transform;
+    }
+    .hero-slide{
+      width:100%;
+      min-width:100%;
+      height:100%;
+      position:relative;
+      flex-shrink:0;
+      overflow:hidden;
+    }
+    .hero-slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center 40%;
+      display:block;
+    }
+    .slide-caption{
+      position:absolute;
+      bottom:14px;
+      left:20px;
+      font-size:10px;
+      color:rgba(255,255,255,.75);
+      letter-spacing:.06em;
+      background:rgba(0,0,0,.28);
+      padding:3px 8px;
+    }
+    .slide-label{
+      position:absolute;
+      top:20px;
+      right:20px;
+      background:#fff;
+      color:var(--text);
+      font-size:14px;
+      font-weight:600;
+      letter-spacing:.02em;
+      padding:8px 16px;
+      line-height:1.4;
+      box-shadow:0 2px 12px rgba(0,0,0,.15);
+      pointer-events:none;
+    }
+    .slide-prev,.slide-next{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(245,244,241,.7);
+      border:none;
+      width:40px;
+      height:40px;
+      cursor:pointer;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:.2s;
+      color:var(--text);
+      z-index:2;
+    }
+    .slide-prev:hover,.slide-next:hover{background:rgba(245,244,241,.95)}
+    .slide-prev{left:16px}
+    .slide-next{right:16px}
+    .slide-dots{
+      position:absolute;
+      bottom:14px;
+      right:20px;
+      display:flex;
+      gap:6px;
+    }
+    .slide-dot{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:rgba(255,255,255,.45);
+      border:none;
+      cursor:pointer;
+      padding:0;
+      transition:.2s;
+    }
+    .slide-dot.active{background:rgba(255,255,255,.95)}
+
+    .hero-copy h1, .hero-box-a h1{
+      margin:0 0 22px;
+      font-size:clamp(18px,2.2vw,30px);
+      line-height:1.4;
+      letter-spacing:.01em;
+      font-weight:700;
+    }
+    .hero-copy p{
+      margin:0 0 16px;
+      max-width:740px;
+      font-size:16px;
+      color:#44423d;
+    }
+    .hero-lead{
+      margin-top:28px;
+      padding-top:24px;
+      display:grid;
+      gap:10px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .list{
+      margin:20px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .list li{
+      padding-left:18px;
+      position:relative;
+      color:#44423d;
+      font-size:15px;
+    }
+    .list li::before{
+      content:"・";
+      position:absolute;
+      left:0;
+      color:var(--muted);
+    }
+
+    .works-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:28px 24px;
+      margin-top:32px;
+    }
+    .work-box{position:relative;overflow:hidden}
+    .work-img-wrap{
+      position:relative;
+      overflow:hidden;
+      margin-bottom:16px;
+      cursor:pointer;
+      display:block;
+      text-decoration:none;
+    }
+    .work-img-wrap img{
+      width:100%;
+      height:320px;
+      object-fit:cover;
+      display:block;
+      transition:transform .4s ease;
+    }
+    .work-img-wrap:hover img{transform:scale(1.04)}
+    .work-overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(20,20,18,.92);
+      color:#f5f4f1;
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      opacity:0;
+      transition:opacity .3s ease;
+      font-size:13px;
+      line-height:1.75;
+    }
+    .work-overlay span strong{
+      display:block;
+      font-size:clamp(15px,2.2vw,20px);
+      font-weight:600;
+      letter-spacing:.04em;
+      line-height:1.4;
+      color:#f5f4f1;
+      border-bottom:1px solid rgba(245,244,241,.2);
+      padding-bottom:12px;
+      margin-bottom:12px;
+    }
+    .work-img-wrap:hover .work-overlay,
+    .work-img-wrap.active .work-overlay{
+      opacity:1;
+    }
+    .work-meta{
+      font-size:11px;
+      color:var(--muted);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .work-box h4{
+      margin:0 0 10px;
+      font-size:22px;
+      font-weight:600;
+      line-height:1.4;
+    }
+    .work-box p{
+      margin:0;
+      font-size:15px;
+      color:#44423d;
+      line-height:1.8;
+    }
+
+    form{
+      display:grid;
+      gap:14px;
+    }
+    label{
+      display:grid;
+      gap:8px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    input,select,textarea{
+      width:100%;
+      border:1px solid #c9c5bc;
+      background:#faf9f6;
+      color:var(--text);
+      padding:14px 16px;
+      font:inherit;
+      border-radius:0;
+      outline:none;
+    }
+    textarea{min-height:150px;resize:vertical}
+
+    .footer{
+      padding:26px 0 40px;
+      border-top:1px solid var(--line);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .footer-inner{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    /* =========================
+       ART MODE
+    ========================= */
+    .art-mode{
+      background:var(--art-bg);
+      color:var(--art-text);
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+    }
+    .art-bg-typo{
+      position:fixed;
+      font-size:24vw;
+      line-height:.8;
+      text-transform:uppercase;
+      z-index:0;
+      pointer-events:none;
+      opacity:.12;
+      white-space:nowrap;
+      font-style:italic;
+      font-weight:900;
+      letter-spacing:-.04em;
+      color:#000;
+    }
+
+    .art-nav-space{
+      height:0;
+    }
+
+    .art-hero{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      padding:120px 0 120px;
+      overflow:hidden;
+      z-index:2;
+    }
+    .art-hero-inner{
+      width:100%;
+      position:relative;
+    }
+    .art-hero-copy{
+      max-width:1100px;
+      position:relative;
+      z-index:3;
+    }
+    .art-kicker{
+      display:inline-block;
+      margin-bottom:28px;
+      font-size:12px;
+      letter-spacing:.24em;
+      text-transform:uppercase;
+      font-weight:700;
+      border:2px solid #000;
+      padding:8px 14px;
+      background:#fff;
+      box-shadow:8px 8px 0 #000;
+    }
+    .art-big{
+      font-size:clamp(52px,9vw,138px);
+      line-height:.88;
+      font-weight:900;
+      letter-spacing:-.04em;
+      text-transform:uppercase;
+      margin:0;
+      word-break:break-word;
+    }
+    .art-big.offset{margin-left:14vw}
+    .art-big.shift{
+      margin-left:5vw;
+      transform:rotate(-2.2deg);
+      display:inline-block;
+      background:#fff;
+      padding:.05em .12em .02em;
+      box-shadow:14px 14px 0 var(--art-accent);
+    }
+    .art-sub{
+      margin-top:34px;
+      max-width:560px;
+      font-size:18px;
+      line-height:1.8;
+      font-weight:700;
+    }
+    .art-sub small{
+      display:block;
+      margin-top:12px;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      opacity:.75;
+    }
+
+    /* ticker */
+    .ticker{
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:100%;
+      overflow:hidden;
+      background:#000;
+      color:var(--art-bg);
+      border-top:3px solid #000;
+      border-bottom:3px solid #000;
+      z-index:1;
+    }
+    .ticker-track{
+      display:flex;
+      width:max-content;
+      animation:tickerMove 22s linear infinite;
+    }
+    .ticker-item{
+      flex:0 0 auto;
+      padding:14px 26px;
+      font-size:13px;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    @keyframes tickerMove{
+      0%{transform:translateX(0)}
+      100%{transform:translateX(-50%)}
+    }
+
+    .art-section{
+      position:relative;
+      z-index:2;
+      padding:8vh 0;
+    }
+    .art-intro{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:32px;
+      align-items:start;
+      margin-bottom:10vh;
+    }
+    .art-statement{
+      background:#fff;
+      border:4px solid #000;
+      padding:28px;
+      box-shadow:22px 22px 0 var(--art-accent);
+      transform:rotate(-1.2deg);
+    }
+    .art-statement h2{
+      margin:0 0 18px;
+      font-size:clamp(28px,4vw,56px);
+      line-height:.95;
+      text-transform:uppercase;
+      letter-spacing:-.03em;
+    }
+    .art-statement p{
+      margin:0;
+      font-size:16px;
+      line-height:2;
+      font-weight:700;
+    }
+    .art-note{
+      padding-top:32px;
+      font-size:14px;
+      line-height:2;
+      font-weight:700;
+      max-width:420px;
+    }
+
+    .visual-stack{
+      display:grid;
+      gap:18vh;
+    }
+    .visual-item{
+      position:relative;
+      width:min(1100px, 88vw);
+      aspect-ratio:16/9;
+      margin:0 auto;
+      border:15px solid #000;
+      background:#000;
+      overflow:hidden;
+      transform:rotate(calc(var(--r) * 1deg));
+      box-shadow:34px 34px 0 var(--art-accent);
+      transition:transform .5s cubic-bezier(.175,.885,.32,1.275),
+                 box-shadow .5s ease;
+    }
+    .visual-item:hover,
+    .visual-item.revealed{
+      transform:rotate(0deg);
+      box-shadow:20px 20px 0 var(--art-accent);
+    }
+
+    /* 左パネル: 説明 — absoluteで左から展開 */
+    .visual-item-data{
+      position:absolute;
+      top:0; left:0; bottom:0;
+      width:0;
+      overflow:hidden;
+      background:rgba(0,255,255,.95);
+      color:#000;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:0;
+      z-index:4;
+      transition:width .45s cubic-bezier(.4,0,.2,1);
+    }
+    .visual-item:hover .visual-item-data,
+    .visual-item.revealed .visual-item-data{
+      width:50%;
+      padding:36px 40px;
+    }
+    .visual-item-data-top{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      line-height:1.8;
+      text-align:left;
+      opacity:0;
+      transition:opacity .3s ease .2s;
+      white-space:nowrap;
+      overflow:hidden;
+    }
+    .visual-item-data-mid{
+      opacity:0;
+      transition:opacity .3s ease .25s;
+    }
+    .visual-item-data-mid h3{
+      font-size:clamp(42px,6vw,96px);
+      font-weight:900;
+      line-height:.85;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+      margin:0 0 20px;
+    }
+    .visual-item-data-desc{
+      font-size:13px;
+      font-weight:500;
+      line-height:1.9;
+      opacity:.85;
+    }
+    .visual-item:hover .visual-item-data-top,
+    .visual-item.revealed .visual-item-data-top,
+    .visual-item:hover .visual-item-data-mid,
+    .visual-item.revealed .visual-item-data-mid{
+      opacity:1;
+    }
+
+    /* 右パネル: ビジュアル — 常に全幅、左パネル展開後は右半分に見える */
+    .visual-item-result{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+    }
+    .visual-item-result img,
+    .visual-item-result video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:contrast(1.05) saturate(1.05);
+    }
+    .visual-item-result picture{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+    }
+    .visual-item:hover .visual-item-result picture,
+    .visual-item.revealed .visual-item-result picture{
+      opacity:1 !important;
+    }
+    .visual-item:hover .visual-item-result video,
+    .visual-item.revealed .visual-item-result video{
+      opacity:0;
+      transition:opacity .3s ease;
+    }
+    .result-label{
+      position:absolute;
+      bottom:16px;
+      right:16px;
+      z-index:5;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      font-size:10px;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.85);
+      background:rgba(0,0,0,.45);
+      padding:4px 8px;
+      opacity:0;
+      transition:opacity .3s ease .3s;
+    }
+    .visual-item:hover .result-label,
+    .visual-item.revealed .result-label{
+      opacity:1;
+    }
+
+    /* visual-captionのビジュアルは右パネルと共有、left側では不要 */
+
+    /* デフォルト: ビジュアル全表示 + 巨大タイポ半透明オーバーレイ */
+    .visual-caption{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      pointer-events:none;
+      transition:opacity .4s ease;
+    }
+    .visual-caption-text{
+      font-size:clamp(64px,14vw,200px);
+      font-weight:900;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+      line-height:.85;
+      text-align:center;
+      color:rgba(230,255,0,.55);
+      width:100%;
+      white-space:pre-line;
+    }
+    .visual-item:hover .visual-caption,
+    .visual-item.revealed .visual-caption{
+      opacity:0;
+    }
+    .visual-item:hover .overlay,
+    .visual-item.revealed .overlay{
+      opacity:1;
+    }
+
+    .art-closing{
+      padding:14vh 0 16vh;
+      position:relative;
+      z-index:2;
+      background:#000;
+    }
+    .art-closing-box{
+      width:min(1100px, 88vw);
+      margin:0 auto;
+      padding:0 48px;
+      text-align:center;
+    }
+    .art-closing-box h3{
+      margin:0 0 24px;
+      font-size:clamp(40px,7vw,96px);
+      line-height:.88;
+      text-transform:uppercase;
+      letter-spacing:-.05em;
+      color:#fff;
+    }
+    .art-closing-box p{
+      margin:0;
+      font-size:18px;
+      line-height:1.9;
+      font-weight:500;
+      max-width:640px;
+      margin:0 auto;
+      color:rgba(255,255,255,.55);
+    }
+    .art-actions{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:48px;
+      justify-content:center;
+    }
+    .art-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      padding:0 32px;
+      border:2px solid #fff;
+      background:none;
+      color:#fff;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .art-button:hover{
+      background:#fff;
+      color:#000;
+    }
+
+    /* mode-specific nav appearance */
+    body.art-active{
+      background:var(--art-bg);
+      color:#000;
+    }
+    body.art-active .nav{
+      background:rgba(230,255,0,.9);
+      border-color:#000;
+    }
+    body.art-active .mode-switch{
+      background:#fff;
+      border-color:#000;
+    }
+    body.art-active .mode-switch button.active{
+      background:#000;
+      color:var(--art-bg);
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,
+      .art-intro,
+      #about .container > div[style*="grid-template-columns:2fr"]{
+        grid-template-columns:1fr !important;
+      }
+      .works-grid{grid-template-columns:1fr}
+      .hero-box-a,.hero-box-b,.white-box{padding:24px 20px}
+      .contact-sticky{position:static !important}
+      .visual-item{
+        width:94vw;
+        aspect-ratio:auto;
+        border-width:8px;
+        box-shadow:18px 18px 0 var(--art-accent);
+        display:block;
+        min-height:0;
+      }
+      .visual-item-data{
+        position:relative !important;
+        width:100% !important;
+        height:0 !important;
+        overflow:hidden !important;
+        padding:0 !important;
+        transition:height .4s ease, padding .4s ease !important;
+      }
+      .visual-item.revealed .visual-item-data{
+        height:auto !important;
+        padding:32px 28px 28px !important;
+      }
+      .visual-item-data-top{
+        margin-bottom:24px;
+        white-space:normal !important;
+        font-size:10px !important;
+        letter-spacing:.16em !important;
+        opacity:.7;
+      }
+      .visual-item-data-mid h3{
+        font-size:clamp(40px,11vw,72px) !important;
+        line-height:.85 !important;
+        margin-bottom:20px;
+      }
+      .visual-item-data-desc{
+        font-size:13px !important;
+        line-height:1.8 !important;
+        opacity:.8;
+      }
+      .visual-item-result{
+        position:relative !important;
+        inset:auto !important;
+        width:100%;
+        aspect-ratio:16/9;
+        min-height:200px;
+      }
+      .visual-item-result img,
+      .visual-item-result video{
+        position:absolute;
+        inset:0;
+      }
+      .visual-caption{
+        position:absolute;
+        inset:0;
+      }
+      .visual-item-data-top,
+      .visual-item-data-mid{
+        opacity:0;
+        transition:opacity .3s ease .2s;
+      }
+      .visual-item.revealed .visual-item-data-top,
+      .visual-item.revealed .visual-item-data-mid{
+        opacity:1;
+      }
+      .overlay{padding:26px}
+      .art-big.offset{margin-left:0}
+      .art-big.shift{margin-left:0;display:inline-block}
+      .art-sub{font-size:16px}
+      .art-note{padding-top:0;max-width:none}
+    }
+
+    @media (max-width: 720px){
+      :root{--pad:16px}
+      .nav-inner{
+        align-items:center;
+        flex-direction:row;
+        padding:0 16px;
+        min-height:56px;
+        flex-wrap:nowrap;
+        justify-content:flex-start;
+        gap:8px;
+      }
+      .brand{
+        flex:1;
+        min-width:0;
+      }
+      .nav-right{
+        flex-shrink:0;
+      }
+      .nav-links{
+        display:none;
+      }
+      #businessNav{ display:none !important; }
+      .hamburger{ display:flex !important; }
+      body.art-active .hamburger{ display:none !important; }
+      .mode-switch{
+        margin-left:8px;
+        flex-shrink:0;
+      }
+      .mode-switch button{
+        padding:7px 10px;
+        font-size:11px;
+      }
+      .hero{padding:16px 0}
+      .section{padding:24px 0}
+      .slide-label{font-size:12px;padding:6px 12px;top:12px;right:12px}
+      .art-kicker{font-size:10px}
+      .ticker-item{
+        font-size:11px;
+        padding:12px 18px;
+        letter-spacing:.18em;
+      }
+      .art-closing-box{padding:24px 20px}
+      .approach-grid{grid-template-columns:1fr !important;}
+      #approach .container > div[style*="repeat(3"]{grid-template-columns:1fr !important;}
+      .art-hero{
+        padding:40px 0 80px;
+        min-height:auto;
+      }
+      .art-hero-copy{padding-bottom:0}
+      .art-big{font-size:clamp(36px,13vw,64px)}
+      .art-sub{margin-top:16px;font-size:14px}
+    }
+
+    /* ===== HAMBURGER / DRAWER ===== */
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      justify-content:center;
+      gap:5px;
+      width:36px;
+      height:36px;
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:4px;
+      margin-left:8px;
+    }
+    .hamburger span{
+      display:block;
+      width:22px;
+      height:1.5px;
+      background:var(--text);
+      transition:.25s ease;
+    }
+    body.art-active .hamburger span{ background:#000; }
+    .hamburger.open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2){ opacity:0; }
+    .hamburger.open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+    .drawer{
+      position:fixed;
+      top:0; left:0; bottom:0;
+      width:280px;
+      background:#fff;
+      z-index:200;
+      transform:translateX(-100%);
+      transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.1);
+    }
+    .drawer.open{ transform:translateX(0); }
+    .drawer-inner{
+      display:flex;
+      flex-direction:column;
+      padding:48px 32px 40px;
+      gap:0;
+      height:100%;
+    }
+    .drawer-brand{
+      font-size:18px;
+      font-weight:700;
+      letter-spacing:.04em;
+      color:var(--text);
+      margin-bottom:8px;
+    }
+    .drawer-tagline{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.6;
+      margin-bottom:32px;
+      padding-bottom:24px;
+      border-bottom:1px solid var(--line);
+    }
+    .drawer-inner a{
+      font-size:18px;
+      font-weight:500;
+      color:var(--text);
+      text-decoration:none;
+      padding:14px 0;
+      border-bottom:1px solid var(--line);
+      letter-spacing:.02em;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .drawer-inner a::after{
+      content:"›";
+      font-size:20px;
+      color:var(--muted);
+      font-weight:300;
+    }
+    .drawer-inner a:last-child{ border-bottom:none; }
+    .drawer-inner a:last-child::after{ display:none; }
+    .drawer-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.35);
+      z-index:199;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .3s ease;
+    }
+    .drawer-overlay.open{ opacity:1; pointer-events:auto; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <button class="hamburger" id="hamburger" aria-label="メニュー" onclick="toggleDrawer()">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="brand" href="#" onclick="switchMode('business'); return false;">NU Inc.</a>
+
+      <div class="nav-right">
+        <nav class="nav-links" id="businessNav">
+          <a href="#works">Works</a>
+          <a href="#approach">Approach</a>
+          <a href="#about">About</a>
+          <a class="button" href="#contact">相談する</a>
+        </nav>
+
+        <div class="mode-switch" aria-label="mode switch">
+          <button id="businessTab" class="active" type="button">Business</button>
+          <button id="artTab" type="button">Art</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer" id="drawer">
+    <div class="drawer-inner">
+      <div class="drawer-brand">NU Inc.</div>
+      <div class="drawer-tagline">空間に、固有の物語を。</div>
+      <a href="#works" onclick="closeDrawer()">Works</a>
+      <a href="#approach" onclick="closeDrawer()">Approach</a>
+      <a href="#about" onclick="closeDrawer()">About</a>
+      <a href="#contact" onclick="closeDrawer()" style="margin-top:auto;border:none;border-top:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;padding:18px 0;border-radius:999px;font-size:15px;font-weight:600;background:var(--text);color:var(--bg);">相談する</a>
+    </div>
+  </div>
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+  <!-- =========================
+       BUSINESS MODE
+  ========================== -->
+  <main id="businessMode" class="mode active">
+    <div class="hero-slideshow">
+      <div class="hero-slides">
+        <div class="hero-slide active">
+          <img src="images/kaze2.jpg" alt="KAZE Project" />
+          <span class="slide-label">風の軌跡 → 壁画 映像</span>
+          <span class="slide-caption">KAZE Project — Okinawa 2022</span>
+        </div>
+        <div class="hero-slide">
+          <img src="images/hero.jpg" alt="THE ORIGIN" />
+          <span class="slide-label">企業理念 → 壁画</span>
+          <span class="slide-caption">THE ORIGIN (2023) — Panasonic Corporation / via Nomal Art Company</span>
+        </div>
+        <div class="hero-slide">
+          <img src="images/wawwd.jpg" alt="wawwd" />
+          <span class="slide-label">市民のアクション → AR 平面作品</span>
+          <span class="slide-caption">wawwd (2024) — The Museum of Art Ehime</span>
+        </div>
+        <div class="hero-slide">
+          <img src="images/aonagi.jpg" alt="AONAGI 1st" />
+          <span class="slide-label">ホテルの日常 → 体験プログラム</span>
+          <span class="slide-caption">AONAGI 1st (2023) — Setouchi Retreat Aonagi</span>
+        </div>
+        <div class="hero-slide">
+          <img src="images/banana.jpg" alt="BANANA X" />
+          <span class="slide-label">NFT ←→ 平面作品</span>
+          <span class="slide-caption">BANANA X (2022) — Setouchi Retreat Aonagi</span>
+        </div>
+      </div>
+      <button class="slide-prev" aria-label="前へ">&#8592;</button>
+      <button class="slide-next" aria-label="次へ">&#8594;</button>
+      <div class="slide-dots"></div>
+    </div>
+
+    <div class="client-bar">
+      <div class="container">
+        <span class="client-bar-label">導入・連携実績</span>
+        パナソニック&nbsp;/&nbsp;愛媛県庁&nbsp;/&nbsp;愛媛新聞社&nbsp;/&nbsp;瀬戸内リトリート青凪&nbsp;/&nbsp;三浦工業&nbsp;/&nbsp;大王製紙&nbsp;/&nbsp;タオル美術館&nbsp;/&nbsp;FC今治&nbsp;/&nbsp;愛媛FC&nbsp;/&nbsp;愛媛大学&nbsp;など
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-box-a">
+          <h1>空間に、固有の物語を。</h1>
+          <p>NU Inc. は、オフィス・商業施設・公共空間において「なぜここにあるのか」が説明できるアートワークを設計・制作します。</p>
+          <div class="hero-lead">
+            <div>対応領域：商業施設 / オフィス / 公共空間 / 宿泊施設 / 展示空間</div>
+            <div>制作内容：壁画 / 平面作品 / 体験設計 / インスタレーション / デジタル表現</div>
+            <div>対応範囲：企画 / 調査 / コンセプト設計 / 制作 / 納品 / 資料作成</div>
+          </div>
+        </div>
+
+        <aside class="hero-box-b">
+          <div class="eyebrow">法人・設計事務所・代理店の方へ</div>
+          <h3>こんな課題はありませんか</h3>
+          <ul class="list">
+            <li>施設のストーリーや地域性を空間に反映したい</li>
+            <li>アートを入れても「ただおしゃれ」になってしまう</li>
+            <li>空間にコンセプトがなく、印象に残らない</li>
+            <li>新規開業・リニューアルに象徴となる要素がほしい</li>
+            <li>SNSや広報で話題になる要素を取り入れたい</li>
+            <li>クライアントへの提案に、もう一段強い切り口がほしい</li>
+          </ul>
+          <div style="margin-top:24px">
+            <a class="button" href="#contact">まずは相談する →</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="works">
+      <div class="container">
+        <div class="eyebrow">Selected works</div>
+        <div class="works-grid">
+      <!-- ============================================================
+        SELECTED WORKS に作品を追加する方法
+        1. images/ フォルダに画像を追加（例: new-work.jpg）
+        2. 以下のブロックをコピーして works-grid 内に貼り付ける
+        3. 各テキストを書き換える
+
+        <article class="work-box">
+          <div class="work-img-wrap" onclick="this.classList.toggle('active')">
+              <img class="work-img" src="images/new-work.jpg" alt="作品名" />
+              <div class="work-overlay"><span>実績・成果の説明。</span></div>
+            </div>
+          <div class="work-meta">年 / 形態</div>
+          <h4>作品タイトル</h4>
+          <p>説明文。どんな課題・依頼から始まったか。</p>
+        </article>
+        ============================================================ -->
+
+          <article class="work-box">
+            <div class="work-img-wrap" onclick="this.classList.toggle('active')">
+              <img class="work-img" src="images/kaze.jpg" alt="KAZE Project: Okinawa 2022" />
+              <div class="work-overlay"><span><strong>KAZE Project（2022）</strong>沖縄での芸術祭出展（2022）を契機に、愛媛・風早アートテラスでのコミッション制作（2024）へ展開。渋谷 MIYASHITA PARK VISIONでの展示（NEORT企画・2026）など、公共空間・商業空間へと展開。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">継続中 / 壁画・デジタルサイネージ</span></span></div>
+            </div>
+            <div class="work-meta">KAZE Project &nbsp;·&nbsp; 2022 - Ongoing</div>
+            <h4>風の軌跡 → 壁画 映像</h4>
+            <p>現地で風を3次元観測し、その場所にしか存在しない風の軌跡を壁画・映像として可視化するプロジェクト。沖縄での芸術祭出展（2022）を契機に、愛媛・風早アートテラスでのコミッション制作（2024）へ展開。渋谷 MIYASHITA PARK VISIONでの展示（2026）など、公共空間・商業空間へと継続展開中。</p>
+          </article>
+
+          <article class="work-box">
+            <a class="work-img-wrap" href="https://nomalartcompany.jp/works/panasonic-tsumichara" target="_blank" rel="noopener">
+              <img class="work-img" src="images/origin.jpg" alt="THE ORIGIN 2023, Panasonic Meguro Building" />
+              <div class="work-overlay"><span><strong>THE ORIGIN（2023）</strong>オフィス空間に固有のストーリーを持つ恒久的な壁画を実現。Panasonic目黒ビルに設置。企業文化を空間として可視化する壁面作品を実装。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">壁画・コミッション制作</span></span></div>
+            </a>
+            <div class="work-meta">THE ORIGIN &nbsp;·&nbsp; 2023</div>
+            <h4>企業理念 → 壁画</h4>
+            <p>Panasonic本社オフィスにおける大型壁画プロジェクト。Nomal Art Companyを通じてプロジェクトに参画し、全長約17mの大型壁面作品をコンセプト設計から施工まで担当。オフィス空間に固有のストーリーを持つ恒久的な壁画として設置。</p>
+          </article>
+
+          <article class="work-box">
+            <a class="work-img-wrap" href="https://portal-wawwd.studio.site" target="_blank" rel="noopener">
+              <img class="work-img" src="images/wawwd.jpg" alt="wawwd 2024, The Museum of Art Ehime" />
+              <div class="work-overlay"><span><strong>wawwd（2024）</strong>市民の参加行為そのものを作品化。愛媛県美術館に展示後、瀬戸内リトリート青凪・三浦工業・愛媛県庁ほか複数法人がコレクション。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">パブリックアート・AR・キャンバス作品</span></span></div>
+            </a>
+            <div class="work-meta">wawwd &nbsp;·&nbsp; 2024</div>
+            <h4>市民のアクション → AR 平面作品</h4>
+            <p>市民参加型のパブリックアートを、恒久的な形で残すプロジェクト。ARアプリを通じて市民が922個のリングを生成し、そのデータを大型キャンバス24枚による壁面作品（約3.6m × 7m）として再構成。愛媛県美術館に展示後、瀬戸内リトリート青凪・三浦工業・愛媛県庁ほか複数法人がコレクション。</p>
+          </article>
+
+          <article class="work-box">
+            <a class="work-img-wrap" href="https://aonagi1st.art" target="_blank" rel="noopener">
+              <img class="work-img" src="images/aonagi.jpg" alt="AONAGI 1st 2023, 瀬戸内リトリート青凪" />
+              <div class="work-overlay"><span><strong>AONAGI 1st（2023）</strong>瀬戸内リトリート青凪にて実施。施設の日常的な視点を作品化し、ゲストと施設の新たな対話を生んだ。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">アートイベント・ホテル・NFT</span></span></div>
+            </a>
+            <div class="work-meta">AONAGI 1st &nbsp;·&nbsp; 2023</div>
+            <h4>ホテルの日常 → 体験プログラム</h4>
+            <p>「ラグジュアリーホテルでアートとテクノロジーを融合したイベントを実施したい」という要望に対し、企画から運営まで一貫して担当。ホテルスタッフが撮影した写真を元にデジタルオブジェクトを生成し、ゲストが館内を探索しながら作品を発見・取得できる体験を設計した。</p>
+          </article>
+
+          <article class="work-box">
+            <a class="work-img-wrap" href="https://banana-x.studio.site" target="_blank" rel="noopener">
+              <img class="work-img" src="images/banana.jpg" alt="BANANA X at Setouchi Retreat Aonagi" />
+              <div class="work-overlay"><span><strong>BANANA X（2022）</strong>愛媛・青森・徳島・京都・沖縄・東京ほか全国を巡回展示。自己資金で開始しながらNFTホルダーによるコミュニティを形成、マーケティングとして機能させた事例。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">自主企画・NFT・全国巡回展示</span></span></div>
+            </a>
+            <div class="work-meta">BANANA X &nbsp;·&nbsp; 2022 -</div>
+            <h4>NFT ←→ 平面作品</h4>
+            <p>1枚のキャンバスを59区域に分割し、各区域をNFTと紐付け。NFTホルダーが物理作品の共同オーナーになる仕組みを設計した自主企画。愛媛・青森・徳島・京都・沖縄・東京ほか全国を巡回展示。</p>
+          </article>
+
+          <article class="work-box">
+            <div class="work-img-wrap" onclick="this.classList.toggle('active')">
+              <img class="work-img" src="images/diffusion.jpg" alt="Diffusion Model / GAN 2025" />
+              <div class="work-overlay"><span><strong>Diffusion Model / GAN（2025）</strong>Art Fair Beppuでの展示後、法人コレクターにより購入され、空間に導入。知的文脈を持つアートワークとして評価された作品。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">キャンバス・AI・展示販売</span></span></div>
+            </div>
+            <div class="work-meta">Diffusion Model / GAN &nbsp;·&nbsp; 2025</div>
+            <h4>AI生成プロセス → 平面作品</h4>
+            <p>AIの生成プロセス（拡散モデル・敵対的生成ネットワーク）を日本の「間（ま）」の概念と接続。Art Fair Beppuでの展示後、法人コレクターにより購入され空間に導入。100号キャンバス2点。</p>
+          </article>
+
+          <article class="work-box">
+            <div class="work-img-wrap" onclick="this.classList.toggle('active')">
+              <img class="work-img" src="images/plausible.jpg" alt="Plausible Series" />
+              <div class="work-overlay"><span><strong>Plausible Series（2026）</strong>テクノロジー・スタートアップ・研究機関などのオフィス、展示空間。コミッション制作として展開可能。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">キャンバス・AI・コミッション受付中</span></span></div>
+            </div>
+            <div class="work-meta">Plausible Series &nbsp;·&nbsp; 2026</div>
+            <h4>アルゴリズム → 平面作品</h4>
+            <p>AIがシミュレートした運動軌跡データを絵画として再構成したシリーズ。テクノロジー文脈を持つ空間において、施設のコンセプトと連動し来場者との対話の起点となることを意図している。</p>
+          </article>
+
+          <article class="work-box">
+            <a class="work-img-wrap" href="https://pitch.com/v/sc_deck-y5xrq8" target="_blank" rel="noopener">
+              <img class="work-img" src="images/super.jpg" alt="Super Confidential" />
+              <div class="work-overlay"><span><strong>Super Confidential（2026）</strong>創業周年・IPO・オフィス移転・事業承継など、組織の節目に。エントランス・会議室・経営者室への導入を想定。<br><span style="font-size:11px;opacity:.7;margin-top:8px;display:block;">シェイプドキャンバス・コミッション受付中</span></span></div>
+            </a>
+            <div class="work-meta">Super Confidential &nbsp;·&nbsp; 2026</div>
+            <h4>KPI → シェイプドキャンバス</h4>
+            <p>企業や組織が持つ非公開のデータ——キャッシュフロー、KPI、創業からの歩み——をシェイプド・キャンバスとして可視化するプロジェクト。数値の起伏をそのままキャンバスの形状として立体化し、当事者にしか読み取れない文脈を空間に定着させる。</p>
+          </article>
+
+        </div>
+
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
+          <p style="margin:0;font-size:14px;color:var(--muted);">
+            <strong style="color:var(--text);">個人での作品購入について。</strong><br>
+            キャンバス作品の一部はArtStickerにてご購入いただけます。
+          </p>
+          <a class="button" href="https://artsticker.app/artists/15170#works" target="_blank" rel="noopener" style="white-space:nowrap;min-width:fit-content;">ArtSticker で見る →</a>
+        </div>
+      </div>
+    </section>
+
+        <section class="section" id="approach">
+      <div class="container">
+        <div class="white-box" style="margin-bottom:6px;">
+          <div class="eyebrow">Approach</div>
+          <h2 style="margin:0;font-size:clamp(18px,2.2vw,30px);line-height:1.4;font-weight:500;">場所に固有の情報を読み取り、アートワークとして定着させます。</h2>
+        </div>
+        <div class="approach-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+          <div class="white-box">
+            <div class="number" style="font-size:20px;margin-bottom:12px;font-family:inherit;">01 読み取る</div>
+            <p style="margin:0;font-size:13px;color:#44423d;line-height:2;"><strong>自然現象</strong>：風の軌跡、植物のかたちなど。<br><strong>企業データ</strong>：企業理念、KPIなど。<br><strong>人の感覚</strong>：市民のアクション、ホテルの日常など。<br><strong>プログラム</strong>：NFT、プロセス、アルゴリズムなど。</p>
+          </div>
+          <div class="white-box">
+            <div class="number" style="font-size:20px;margin-bottom:12px;font-family:inherit;">02 翻訳する</div>
+            <p style="margin:0;font-size:13px;color:#44423d;line-height:2;"><strong>文脈接続</strong>：空間の用途・背景と結びつける。<br><strong>概念設計</strong>：情報を意味として整理する。<br><strong>構造設計</strong>：体験や配置を設計する。<br><strong>表現変換</strong>：作品として成立する形式へ変換する。</p>
+          </div>
+          <div class="white-box">
+            <div class="number" style="font-size:20px;margin-bottom:12px;font-family:inherit;">03 かたちにする</div>
+            <p style="margin:0;font-size:13px;color:#44423d;line-height:2;"><strong>壁画 / 平面作品</strong>：エントランス、廊下、共用部など。小規模から大型壁面まで対応。<br><strong>インスタレーション</strong>：空間全体を使った体験型の作品。屋内・屋外問わず対応。<br><strong>デジタル表現</strong>：データビジュアライゼーション、サイネージ、AR連携など。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;align-items:start;">
+          <div>
+            <div class="white-box" style="margin-bottom:6px;">
+              <div class="eyebrow">About</div>
+              <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:start;">
+                <div>
+                  <p style="margin:0 0 16px;color:#44423d;">NU Inc.は、企業・施設・公共空間に向けたアートワークの企画・設計・制作を行う福岡拠点のクリエイティブスタジオです。</p>
+                  <p style="margin:0;color:#44423d;">場所の調査、コンセプト設計、アートワーク制作、納品までを一貫して対応します。</p>
+                </div>
+                <div>
+                  <p style="margin:0 0 8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);">Company</p>
+                  <p style="margin:0;font-size:14px;color:#44423d;line-height:2.4;">会社名：株式会社NU / NU Inc.<br>設立：2023年<br>代表：寺尾 章<br>所在地：福岡県福津市</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="white-box">
+              <div style="display:grid;grid-template-columns:.5fr 1fr;gap:48px;align-items:center;">
+                <div><img src="images/profile.jpg" alt="寺尾章 / Akira Terao" style="width:100%;display:block;object-fit:cover;" /></div>
+                <div>
+                  <p style="margin:0 0 4px;font-size:18px;font-weight:500;line-height:1.4;">寺尾 章 <span style="font-size:14px;font-weight:400;color:var(--muted);">(Akira Terao)</span></p>
+                  <p style="margin:0 0 16px;font-size:13px;color:var(--muted);">NU Inc. 代表 / Director · Artist</p>
+                  <p style="margin:0;color:#44423d;">IBMコンサルティングを経て事業会社を創業・売却後、アーティストとして活動。「tsumichara」名義でも作品を発表しています。Panasonic本社、愛媛県美術館、渋谷MIYASHITA PARK VISIONほか、企業・文化施設・公共空間での実績があります。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="white-box contact-sticky" id="contact" style="position:sticky;top:84px;">
+            <div class="eyebrow">Contact</div>
+            <p style="margin:0 0 20px;font-size:15px;font-weight:500;line-height:1.6;color:var(--text);">案件になる前の段階からご相談いただけます。</p>
+            <form action="https://formspree.io/f/mkokjaod" method="POST">
+              <label>ご担当者名 / 会社名<input type="text" name="name" placeholder="山田 太郎 / ○○株式会社" /></label>
+              <label>メールアドレス<input type="email" name="email" placeholder="name@example.com" /></label>
+              <label>ご相談の種類
+                <select name="type">
+                  <option>オフィス・商業施設へのアート導入</option>
+                  <option>公共空間・屋外インスタレーション</option>
+                  <option>新規開業・リニューアルの空間演出</option>
+                  <option>パートナーとしての協業・共同提案</option>
+                  <option>まず話を聞いてみたい</option>
+                </select>
+              </label>
+              <label>ご相談内容<textarea name="message" placeholder="空間の用途や規模、時期、ご予算感など。&#13;&#10;何をつくるべきかの整理からでもご一緒できます。"></textarea></label>
+              <button class="button" type="submit" style="width:100%;">送信する →</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>NU Inc. — Fukuoka, JP</div>
+        <div>
+          <a href="https://www.instagram.com/tsumichara/" target="_blank" rel="noopener">Instagram</a>
+          &nbsp;&nbsp;&nbsp;
+          <a href="https://artsticker.app/artists/15170#works" target="_blank" rel="noopener">ArtSticker</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- =========================
+       ART MODE
+  ========================== -->
+  <main id="artMode" class="mode art-mode">
+    <div class="art-bg-typo" style="top:8%; left:-2%;">LOOK FIRST.</div>
+    <div class="art-bg-typo" style="top:52%; right:-4%;">KNOW LATER.</div>
+
+    <section class="art-hero">
+      <div class="container art-hero-inner">
+        <div class="art-hero-copy">
+          <h1 class="art-big">LOOK FIRST.</h1>
+          <h1 class="art-big offset shift">KNOW LATER.</h1>
+
+          <div class="art-sub" style="border-left:6px solid #000;padding-left:20px;margin-top:40px;">
+            見た瞬間は、意味がわからない。触れると、それが風だったとわかる。人の動きだったとわかる。企業の数字だったとわかる。データから、空間や記憶に残るものを。それが NU Inc.の仕事です。
+          </div>
+        </div>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <div class="ticker-item">wind trajectory → wall / moving image</div>
+          <div class="ticker-item">corporate philosophy → mural</div>
+          <div class="ticker-item">citizen actions → AR / canvas work</div>
+          <div class="ticker-item">hotel daily log → experience program</div>
+          <div class="ticker-item">NFT ↔ physical canvas</div>
+          <div class="ticker-item">AI generative process → painting</div>
+          <div class="ticker-item">algorithm → canvas work</div>
+          <div class="ticker-item">private KPI data → shaped canvas</div>
+          <div class="ticker-item">wind trajectory → wall / moving image</div>
+          <div class="ticker-item">corporate philosophy → mural</div>
+          <div class="ticker-item">citizen actions → AR / canvas work</div>
+          <div class="ticker-item">hotel daily log → experience program</div>
+          <div class="ticker-item">NFT ↔ physical canvas</div>
+          <div class="ticker-item">AI generative process → painting</div>
+          <div class="ticker-item">algorithm → canvas work</div>
+          <div class="ticker-item">private KPI data → shaped canvas</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="art-section">
+      <div class="container">
+
+        <div class="visual-stack">
+          <section class="visual-item" style="--r:-3" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: 3D_WIND_VECTOR_FIELD</div>
+              <div class="visual-item-data-mid">
+                <h3>WIND<br>PULSE</h3>
+                <div class="visual-item-data-desc">風の動きは、場所の記憶である。3次元の風速データを解析し、目に見えない大気の流れを、空間に残る形へ翻訳した。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text">WIND
+PULSE</div></div>
+              <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><source src="images/art_kaze_look.mp4" type="video/mp4" /></video>
+              <picture style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s ease .3s;">
+                <source media="(max-width:980px)" srcset="images/art_kaze_know_sp.jpg" />
+                <img src="images/art_kaze_know_pc.jpg" alt="KAZE PROJECT output" style="width:100%;height:100%;object-fit:cover;" />
+              </picture>
+              <div class="result-label">OUTPUT: KAZE PROJECT — WALL / DIGITAL<br>LOCATION: URUMA, OKINAWA<br>YEAR: 2022</div>
+            </div>
+          </section>
+
+          <section class="visual-item" style="--r:2" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: CORPORATE_PHILOSOPHY</div>
+              <div class="visual-item-data-mid">
+                <h3>THE<br>ORIGIN</h3>
+                <div class="visual-item-data-desc">企業理念は、目に見えない。言語化された価値観を解体し、全長17mの壁面として空間に定着させた。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text">THE
+ORIGIN</div></div>
+              <img src="images/art_origin_look.jpg" alt="THE ORIGIN look" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;" />
+              <picture style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s ease .3s;">
+                <source media="(max-width:980px)" srcset="images/art_origin_know_sp.jpg" />
+                <img src="images/art_origin_know_pc.jpg" alt="THE ORIGIN output" style="width:100%;height:100%;object-fit:cover;" />
+              </picture>
+              <div class="result-label">OUTPUT: THE ORIGIN — WALL 17M / PANASONIC<br>LOCATION: PANASONIC MEGURO<br>YEAR: 2023</div>
+            </div>
+          </section>
+
+          <section class="visual-item" style="--r:-2" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: HUMAN_BEHAVIOR_DATA</div>
+              <div class="visual-item-data-mid">
+                <h3>SOCIAL<br>ORBIT</h3>
+                <div class="visual-item-data-desc">市民の行動は、都市の鼓動である。922個のリングとして圧縮し、その場に生まれた関係性そのものをビジュアル化した。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text" style="color:rgba(0,0,0,1);">SOCIAL
+ORBIT</div></div>
+              <img src="images/art_wawwd_look.jpg" alt="wawwd look" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;" />
+              <picture style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s ease .3s;">
+                <source media="(max-width:980px)" srcset="images/art_wawwd_know_sp.jpg" />
+                <img src="images/art_wawwd_know_pc.jpg" alt="wawwd output" style="width:100%;height:100%;object-fit:cover;" />
+              </picture>
+              <div class="result-label">OUTPUT: WAWWD — CANVAS 24 PANELS / AR<br>LOCATION: EHIME ART MUSEUM<br>YEAR: 2024</div>
+            </div>
+          </section>
+
+          <section class="visual-item" style="--r:3" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: HOTEL_DAILY_LOG</div>
+              <div class="visual-item-data-mid">
+                <h3>AONAGI<br>1ST</h3>
+                <div class="visual-item-data-desc">日常の記録は、体験になる。ホテルスタッフの視点から生まれたデジタルオブジェクトを、ゲストが館内で発見する体験へ変換した。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text">AONAGI
+1ST</div></div>
+              <img src="images/aonagi.jpg" alt="AONAGI" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+              <div class="result-label">OUTPUT: AONAGI 1ST — EXPERIENCE PROGRAM<br>LOCATION: SETOUCHI AONAGI<br>YEAR: 2023</div>
+            </div>
+          </section>
+
+          <section class="visual-item" style="--r:-1" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: NFT_OWNERSHIP_STRUCTURE</div>
+              <div class="visual-item-data-mid">
+                <h3>BANANA<br>X</h3>
+                <div class="visual-item-data-desc">所有の境界は、どこにあるか。1枚のキャンバスを59区域に分割し、NFTと物理作品を接続。デジタルと物理の共同所有という新しい関係性を設計した。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text">BANANA
+X</div></div>
+              <img src="images/banana.jpg" alt="BANANA X" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+              <div class="result-label">OUTPUT: BANANA X — CANVAS / NFT<br>LOCATION: NATIONWIDE TOUR<br>YEAR: 2022</div>
+            </div>
+          </section>
+
+          <section class="visual-item" style="--r:2" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: AI_GENERATIVE_PROCESS</div>
+              <div class="visual-item-data-mid">
+                <h3>DIFFUSION<br>MODEL</h3>
+                <div class="visual-item-data-desc">AIのノイズが、絵画になる。拡散モデルの生成プロセスを「間（ま）」の概念と接続し、100号キャンバス2点として結晶化した。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text">DIFFUSION
+MODEL</div></div>
+              <img src="images/diffusion.jpg" alt="Diffusion Model" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+              <div class="result-label">OUTPUT: DIFFUSION MODEL — CANVAS 100 × 2<br>LOCATION: ART FAIR BEPPU<br>YEAR: 2025</div>
+            </div>
+          </section>
+
+          <section class="visual-item" style="--r:-2" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: MOTION_TRAJECTORY_ALGORITHM</div>
+              <div class="visual-item-data-mid">
+                <h3>PLAUSIBLE<br>SERIES</h3>
+                <div class="visual-item-data-desc">運動はデータになり、データは絵画になる。AIがシミュレートした軌跡を起点に、技術文脈を持つ空間のための平面作品へ翻訳した。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text">PLAUSIBLE
+SERIES</div></div>
+              <img src="images/plausible.jpg" alt="Plausible Series" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+              <div class="result-label">OUTPUT: PLAUSIBLE SERIES — CANVAS / AI<br>LOCATION: COMMISSION<br>YEAR: 2026</div>
+            </div>
+          </section>
+
+          <section class="visual-item" style="--r:3" tabindex="0">
+            <div class="visual-item-data">
+              <div class="visual-item-data-top">INPUT: PRIVATE_KPI_DATA</div>
+              <div class="visual-item-data-mid">
+                <h3>SUPER<br>CONFID.</h3>
+                <div class="visual-item-data-desc">非公開の数字が、かたちになる。キャッシュフロー・KPI・創業からの歩みを、シェイプド・キャンバスの輪郭として立体化した。</div>
+              </div>
+            </div>
+            <div class="visual-item-result">
+              <div class="visual-caption"><div class="visual-caption-text">SUPER
+CONFID.</div></div>
+              <img src="images/super.jpg" alt="Super Confidential" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+              <div class="result-label">OUTPUT: SUPER CONFIDENTIAL — SHAPED CANVAS<br>LOCATION: COMMISSION<br>YEAR: 2026</div>
+            </div>
+          </section>
+        
+        </div>
+      </div>
+    </section>
+
+    <section class="art-closing">
+      <div class="art-closing-box">
+        <h3>LOOK FIRST.<br>KNOW LATER.</h3>
+        <p style="margin:32px auto 0;font-size:16px;font-weight:500;line-height:2;color:rgba(255,255,255,.7);text-align:center;">NU Inc. は、その場所に固有の物語や意味を残します。<br>案件になる前でも、お気軽にご相談ください。</p>
+        <div class="art-actions">
+          <button class="art-button" type="button" onclick="switchMode('business', '#works')">Back to Business</button>
+          <button class="art-button" type="button" onclick="switchMode('business', '#contact')">Talk First</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // =========================
+    // BUSINESS / ART SWITCH
+    // =========================
+    const businessTab = document.getElementById('businessTab');
+    const artTab = document.getElementById('artTab');
+    const businessMode = document.getElementById('businessMode');
+    const artMode = document.getElementById('artMode');
+    const businessNav = document.getElementById('businessNav');
+
+
+    function toggleDrawer(){
+      var d = document.getElementById('drawer');
+      var o = document.getElementById('drawerOverlay');
+      var h = document.getElementById('hamburger');
+      var open = d.classList.toggle('open');
+      o.classList.toggle('open', open);
+      h.classList.toggle('open', open);
+    }
+    function closeDrawer(){
+      document.getElementById('drawer').classList.remove('open');
+      document.getElementById('drawerOverlay').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    }
+    function switchMode(mode, targetHash = '') {
+      if (mode === 'art') {
+        businessMode.classList.remove('active');
+        artMode.classList.add('active');
+        businessTab.classList.remove('active');
+        artTab.classList.add('active');
+        businessNav.style.visibility = 'hidden';
+        businessNav.style.pointerEvents = 'none';
+        document.body.classList.add('art-active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        artMode.classList.remove('active');
+        businessMode.classList.add('active');
+        artTab.classList.remove('active');
+        businessTab.classList.add('active');
+        businessNav.style.visibility = '';
+        businessNav.style.pointerEvents = '';
+        document.body.classList.remove('art-active');
+
+        if (targetHash) {
+          requestAnimationFrame(() => {
+            const target = document.querySelector(targetHash);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    }
+
+    businessTab.addEventListener('click', () => switchMode('business'));
+    artTab.addEventListener('click', () => switchMode('art'));
+
+    // =========================
+    // BUSINESS SLIDESHOW
+    // =========================
+    (function(){
+      document.addEventListener('DOMContentLoaded', function(){
+        const slides = document.querySelector('.hero-slides');
+        if(!slides) return;
+        const items = slides.querySelectorAll('.hero-slide');
+        const dotsWrap = document.querySelector('.slide-dots');
+        const total = items.length;
+        let cur = 0;
+        let timer;
+
+        items.forEach(function(_, i){
+          const d = document.createElement('button');
+          d.className = 'slide-dot' + (i===0 ? ' active' : '');
+          d.addEventListener('click', function(){ go(i); reset(); });
+          dotsWrap.appendChild(d);
+        });
+        const dots = dotsWrap.querySelectorAll('.slide-dot');
+
+        function go(n){
+          cur = (n + total) % total;
+          slides.style.transform = 'translateX(-' + (cur * 100) + '%)';
+          dots.forEach(function(d, i){ d.classList.toggle('active', i === cur); });
+        }
+
+        function reset(){
+          clearInterval(timer);
+          timer = setInterval(function(){ go(cur + 1); }, 4000);
+        }
+
+        const prev = document.querySelector('.slide-prev');
+        const next = document.querySelector('.slide-next');
+        if(prev) prev.addEventListener('click', function(){ go(cur - 1); reset(); });
+        if(next) next.addEventListener('click', function(){ go(cur + 1); reset(); });
+
+        reset();
+      });
+    })();
+
+    // =========================
+    // ART TYPO PARALLAX
+    // =========================
+    window.addEventListener('scroll', () => {
+      if (!document.body.classList.contains('art-active')) return;
+      const scrolled = window.pageYOffset;
+      document.querySelectorAll('.art-bg-typo').forEach((el, i) => {
+        const speed = (i + 1) * 0.18;
+        el.style.transform = `translateX(${(scrolled * speed) - 100}px) rotate(${-5 + (i * 5)}deg)`;
+      });
+    });
+
+    // =========================
+    // TAP TO REVEAL FOR MOBILE
+    // =========================
+    document.querySelectorAll('.visual-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (window.innerWidth <= 980) {
+          item.classList.toggle('revealed');
+        }
+      });
+      item.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.classList.toggle('revealed');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
