@@ -900,21 +900,15 @@
       .visual-item-data{
         position:relative !important;
         width:100% !important;
-        height:0 !important;
-        overflow:hidden !important;
-        padding:0 !important;
-        transition:height .4s ease, padding .4s ease !important;
-      }
-      .visual-item.revealed .visual-item-data{
         height:auto !important;
-        padding:32px 28px 28px !important;
+        overflow:visible !important;
+        padding:28px 24px !important;
       }
       .visual-item-data-top{
-        margin-bottom:24px;
-        white-space:normal !important;
-        font-size:10px !important;
-        letter-spacing:.16em !important;
-        opacity:.7;
+        display:none !important;
+      }
+      .visual-item-data-mid{
+        opacity:1 !important;
       }
       .visual-item-data-mid h3{
         font-size:clamp(40px,11vw,72px) !important;
@@ -932,21 +926,40 @@
         width:100%;
         aspect-ratio:16/9;
         min-height:200px;
+        overflow:hidden;
       }
       .visual-item-result img,
       .visual-item-result video{
         position:absolute;
         inset:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        opacity:1 !important;
+      }
+      /* スマホ: pictureはvisual-item-resultの外・下に表示 */
+      .visual-item-result picture{
+        display:none !important;
       }
       .visual-caption{
-        position:absolute;
-        inset:0;
+        display:none !important;
       }
-      .visual-item.revealed .visual-caption{
-        opacity:0 !important;
+      .result-label{
+        display:none !important;
       }
-      .visual-item.revealed .visual-item-result picture{
-        opacity:1 !important;
+      /* スマホ用KNOW画像ブロック */
+      .mobile-know{
+        display:block;
+        width:100%;
+        aspect-ratio:16/9;
+        position:relative;
+        overflow:hidden;
+      }
+      .mobile-know img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
       }
       .visual-item-data-top,
       .visual-item-data-mid{
@@ -1006,7 +1019,38 @@
         letter-spacing:.18em;
       }
       .art-closing-box{padding:24px 20px}
-      .toggle-btn{ display:flex; }
+      .toggle-btn{ display:none !important; }
+      /* スマホ: LOOKにINPUTラベル */
+      .mobile-look-label{
+        position:absolute;
+        top:10px; left:10px;
+        font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+        font-size:9px;
+        font-weight:700;
+        letter-spacing:.14em;
+        text-transform:uppercase;
+        color:rgba(255,255,255,.8);
+        background:rgba(0,0,0,.5);
+        padding:3px 7px;
+        z-index:5;
+        display:none;
+      }
+      /* スマホ: KNOWにOUTPUTラベル */
+      .mobile-know-label{
+        position:absolute;
+        bottom:10px; right:10px;
+        font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+        font-size:9px;
+        font-weight:700;
+        letter-spacing:.14em;
+        text-transform:uppercase;
+        color:rgba(255,255,255,.8);
+        background:rgba(0,0,0,.5);
+        padding:3px 7px;
+        z-index:5;
+        display:none;
+      }
+      .mobile-look-label, .mobile-know-label{ display:block; }
       .approach-grid{grid-template-columns:1fr !important;}
       #approach .container > div[style*="repeat(3"]{grid-template-columns:1fr !important;}
       .art-hero{
@@ -1484,6 +1528,7 @@
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : 風の軌跡</div>
               <div class="visual-caption"><div class="visual-caption-text">WIND
 LINE</div></div>
               <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><source src="images/art_kaze_look.mp4" type="video/mp4" /></video>
@@ -1493,6 +1538,14 @@ LINE</div></div>
               </picture>
               <div class="result-label">OUTPUT: KAZE PROJECT — WALL / DIGITAL<br>LOCATION: URUMA, OKINAWA<br>YEAR: 2022</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : 壁画 / 映像</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/art_kaze_know_sp.jpg" />
+              <img src="images/art_kaze_know_pc.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
 
           <section class="visual-item" tabindex="0">
@@ -1505,6 +1558,7 @@ LINE</div></div>
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : 企業理念</div>
               <div class="visual-caption"><div class="visual-caption-text">THE
 ORIGIN</div></div>
               <img src="images/art_origin_look.jpg" alt="THE ORIGIN look" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;" />
@@ -1514,6 +1568,14 @@ ORIGIN</div></div>
               </picture>
               <div class="result-label">OUTPUT: THE ORIGIN — WALL 17M / PANASONIC<br>LOCATION: PANASONIC MEGURO<br>YEAR: 2023</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : 壁画</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/art_origin_know_sp.jpg" />
+              <img src="images/biz_origin.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
 
           <section class="visual-item" tabindex="0">
@@ -1526,6 +1588,7 @@ ORIGIN</div></div>
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : 市民のアクション</div>
               <div class="visual-caption"><div class="visual-caption-text" style="color:rgba(0,0,0,1);">CITIZEN
 ACTIONS</div></div>
               <img src="images/art_wawwd_look.jpg" alt="wawwd look" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;" />
@@ -1535,6 +1598,14 @@ ACTIONS</div></div>
               </picture>
               <div class="result-label">OUTPUT: WAWWD — CANVAS 24 PANELS / AR<br>LOCATION: EHIME ART MUSEUM<br>YEAR: 2024</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : AR / 平面作品</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/art_wawwd_know_sp.jpg" />
+              <img src="images/art_wawwd_know_pc.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
 
           <section class="visual-item" tabindex="0">
@@ -1547,6 +1618,7 @@ ACTIONS</div></div>
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : ホテルの日常</div>
               <div class="visual-caption"><div class="visual-caption-text" style="color:rgba(0,0,0,0.8);">HOTEL
 DAILY LOG</div></div>
               <img src="images/art_aonagi_look.jpg" alt="AONAGI look" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;" />
@@ -1556,6 +1628,14 @@ DAILY LOG</div></div>
               </picture>
               <div class="result-label">OUTPUT: AONAGI 1ST — EXPERIENCE PROGRAM<br>LOCATION: SETOUCHI AONAGI<br>YEAR: 2023</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : 体験プログラム</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/art_aonagi_know_sp.jpg" />
+              <img src="images/art_aonagi_know_pc.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
 
           <section class="visual-item" tabindex="0">
@@ -1563,14 +1643,14 @@ DAILY LOG</div></div>
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: NFT_OWNERSHIP_STRUCTURE</div>
               <div class="visual-item-data-mid">
-                <h3>SHARED<br>OWNER<br>SHIP</h3>
+                <h3>SHARED<br>OWNERSHIP</h3>
                 <div class="visual-item-data-desc">所有の境界は、どこにあるか。1枚のキャンバスを59区域に分割し、NFTと物理作品を接続。デジタルと物理の共同所有という新しい関係性を設計した。</div>
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : NFT</div>
               <div class="visual-caption"><div class="visual-caption-text" style="white-space:pre-line;color:rgba(255,255,255,0.8);">SHARED
-OWNER
-SHIP</div></div>
+OWNERSHIP</div></div>
               <img src="images/art_banana_look.jpg" alt="BANANA X look" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;" />
               <picture style="position:absolute;inset:0;width:100%;height:100%;transition:opacity .4s ease;">
                 <source media="(max-width:980px)" srcset="images/banana.jpg" />
@@ -1578,6 +1658,14 @@ SHIP</div></div>
               </picture>
               <div class="result-label">OUTPUT: BANANA X — CANVAS / NFT<br>LOCATION: NATIONWIDE TOUR<br>YEAR: 2022</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : 平面作品</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/banana.jpg" />
+              <img src="images/banana.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
 
           <section class="visual-item" tabindex="0">
@@ -1590,6 +1678,7 @@ SHIP</div></div>
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : AI生成プロセス</div>
               <div class="visual-caption"><div class="visual-caption-text" style="color:rgba(220,221,221,0.8);">DIFFUSION
 MODEL</div></div>
               <iframe src="images/diffusion_look.html" style="position:absolute;inset:0;width:100%;height:100%;border:none;pointer-events:none;" scrolling="no"></iframe>
@@ -1599,6 +1688,14 @@ MODEL</div></div>
               </picture>
               <div class="result-label">OUTPUT: DIFFUSION MODEL — CANVAS 100 × 2<br>LOCATION: ART FAIR BEPPU<br>YEAR: 2025</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : 平面作品</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/diffusion.jpg" />
+              <img src="images/diffusion.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
 
           <section class="visual-item" tabindex="0">
@@ -1611,6 +1708,7 @@ MODEL</div></div>
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : アルゴリズム</div>
               <div class="visual-caption"><div class="visual-caption-text">MOTION
 DATA</div></div>
               <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .3s ease;"><source src="images/art_plausible_look.mp4" type="video/mp4" /></video>
@@ -1620,6 +1718,14 @@ DATA</div></div>
               </picture>
               <div class="result-label">OUTPUT: PLAUSIBLE SERIES — CANVAS / AI<br>LOCATION: COMMISSION<br>YEAR: 2026</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : 平面作品</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/plausible.jpg" />
+              <img src="images/plausible.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
 
           <section class="visual-item" tabindex="0">
@@ -1632,6 +1738,7 @@ DATA</div></div>
               </div>
             </div>
             <div class="visual-item-result">
+              <div class="mobile-look-label">INPUT : KPIデータ</div>
               <div class="visual-caption"><div class="visual-caption-text">PRIVATE
 DATA</div></div>
               <iframe src="images/kpi_look.html" style="position:absolute;inset:0;width:100%;height:100%;border:none;pointer-events:none;" scrolling="no"></iframe>
@@ -1641,6 +1748,14 @@ DATA</div></div>
               </picture>
               <div class="result-label">OUTPUT: SUPER CONFIDENTIAL — SHAPED CANVAS<br>LOCATION: COMMISSION<br>YEAR: 2026</div>
             </div>
+          
+          <div class="mobile-know" style="position:relative;">
+            <div class="mobile-know-label">OUTPUT : シェイプドキャンバス</div>
+            <picture>
+              <source media="(max-width:980px)" srcset="images/art_super_know.jpg" />
+              <img src="images/art_super_know.jpg" alt="know" />
+            </picture>
+          </div>
           </section>
         
         </div>
@@ -1777,13 +1892,24 @@ DATA</div></div>
     function showKnow(item) { item.classList.add('revealed'); }
     function showLook(item) { item.classList.remove('revealed'); }
 
-    // ＋/×ボタンのみでtoggle（visual-item全体のclickは廃止）
+    let lastToggleTime = 0;
+
+    // 画像タップ → 展開（未展開時のみ、直前のtoggle操作から300ms以内は無視）
+    document.querySelectorAll('.visual-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (Date.now() - lastToggleTime < 300) return;
+        if (!item.classList.contains('revealed')) showKnow(item);
+      });
+    });
+
+    // ＋/×ボタン → toggle
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       ['click','touchend'].forEach(evtName => {
         btn.addEventListener(evtName, (e) => {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
+          lastToggleTime = Date.now();
           const item = btn.closest('.visual-item');
           item.classList.contains('revealed') ? showLook(item) : showKnow(item);
         });
