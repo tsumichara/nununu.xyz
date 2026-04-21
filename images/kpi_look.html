@@ -50,7 +50,13 @@ function getW() { return canvas.width; }
 function getH() { return canvas.height; }
 function getPAD() {
   const W = getW(), H = getH();
-  return { top: H*0.15, bottom: H*0.12, left: W*0.04, right: W*0.04 };
+  const isMobile = W < 600;
+  return {
+    top: isMobile ? H*0.22 : H*0.15,
+    bottom: H*0.12,
+    left: W*0.04,
+    right: W*0.04
+  };
 }
 
 function xOf(i) {
@@ -76,12 +82,13 @@ function drawLegend() {
   const fs = Math.max(12, W * 0.013);
   const lineLen = W * 0.025;
   const gap = W * 0.003;
-  const lineSpacing = fs * 2.2;
+  const lineSpacing = fs * 1.5;
 
   ctx.font = `700 ${fs}px "Helvetica Neue", Arial, sans-serif`;
 
   // ACTUAL (上)
-  const ly1 = P.top - H * 0.09;
+  const isMobile = W < 600;
+  const ly1 = isMobile ? P.top - H * 0.18 : P.top - H * 0.09;
   ctx.beginPath();
   ctx.moveTo(lx, ly1); ctx.lineTo(lx + lineLen, ly1);
   ctx.strokeStyle = 'rgba(255,255,255,0.9)';
@@ -169,16 +176,7 @@ function drawZeroLine() {
 }
 
 function drawYearLabels(prog) {
-  const W = getW(), H = getH();
-  const currentIdx = Math.floor(prog * (N - 1));
-  const fs = Math.max(10, W * 0.008);
-  ctx.font = `${fs}px "Helvetica Neue", Arial, sans-serif`;
-  ctx.textAlign = 'left';
-  yearStarts.forEach((si, yi) => {
-    if (si > currentIdx + 1) return;
-    ctx.fillStyle = 'rgba(255,255,255,0.18)';
-    ctx.fillText(years[yi], xOf(si) + 6, H - getPAD().bottom + fs * 1.8);
-  });
+  // 年ラベル非表示
 }
 
 let progress = 0;
