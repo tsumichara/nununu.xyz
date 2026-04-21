@@ -688,8 +688,9 @@
       opacity:0;
       transition:opacity .4s ease;
     }
-    .visual-item:hover .visual-item-result picture{
-      opacity:1 !important;
+    .visual-item:hover .visual-item-result picture,
+    .visual-item.revealed .visual-item-result picture{
+      opacity:1;
     }
     .visual-item-result > img,
     .visual-item-result > video{
@@ -697,11 +698,11 @@
     }
     .visual-item:hover .visual-item-result > img,
     .visual-item.revealed .visual-item-result > img{
-      opacity:0 !important;
+      opacity:0;
     }
     .visual-item:hover .visual-item-result video,
     .visual-item.revealed .visual-item-result video{
-      opacity:0 !important;
+      opacity:0;
       transition:opacity .3s ease;
     }
     .result-label{
@@ -752,7 +753,7 @@
     }
     .visual-item:hover .visual-caption,
     .visual-item.revealed .visual-caption{
-      opacity:0 !important;
+      opacity:0;
     }
     .visual-item:hover .overlay,
     .visual-item.revealed .overlay{
@@ -1771,30 +1772,32 @@ DATA</div></div>
     // ======================
     function showKnow(item) {
       item.classList.add('revealed');
-      const pic = item.querySelector('.visual-item-result picture');
-      const vid = item.querySelector('.visual-item-result video');
-      const img = item.querySelector('.visual-item-result > img');
-      const label = item.querySelector('.result-label');
-      const caption = item.querySelector('.visual-caption');
-      if (pic) pic.style.opacity = '1';
-      if (vid) vid.style.opacity = '0';
-      if (img) img.style.opacity = '0';
-      if (label) label.style.opacity = '1';
-      if (caption) caption.style.opacity = '0';
+      // スマホのみインライン制御
+      if (window.innerWidth <= 980) {
+        const pic = item.querySelector('.visual-item-result picture');
+        const vid = item.querySelector('.visual-item-result video');
+        const img = item.querySelector('.visual-item-result > img');
+        const label = item.querySelector('.result-label');
+        const caption = item.querySelector('.visual-caption');
+        if (pic) pic.style.opacity = '1';
+        if (vid) vid.style.opacity = '0';
+        if (img) img.style.opacity = '0';
+        if (label) label.style.opacity = '1';
+        if (caption) caption.style.opacity = '0';
+      }
     }
 
     function showLook(item) {
       item.classList.remove('revealed');
-      const pic = item.querySelector('.visual-item-result picture');
-      const vid = item.querySelector('.visual-item-result video');
-      const img = item.querySelector('.visual-item-result > img');
-      const label = item.querySelector('.result-label');
-      const caption = item.querySelector('.visual-caption');
-      if (pic) pic.style.opacity = '0';
-      if (vid) vid.style.opacity = '1';
-      if (img) img.style.opacity = '1';
-      if (label) label.style.opacity = '0';
-      if (caption) caption.style.opacity = '1';
+      // スマホのみインライン制御（すべてクリアしてCSSに戻す）
+      if (window.innerWidth <= 980) {
+        item.querySelectorAll('.visual-item-result picture, .visual-item-result video, .visual-item-result > img, .result-label, .visual-caption').forEach(el => {
+          el.style.removeProperty('opacity');
+        });
+        // pictureだけはデフォルトCSS opacity:0なのでインラインで0を明示
+        const pic = item.querySelector('.visual-item-result picture');
+        if (pic) pic.style.opacity = '0';
+      }
     }
 
     // visual-item全体タップ → 展開（未展開時のみ）
