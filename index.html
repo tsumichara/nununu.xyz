@@ -750,6 +750,54 @@
       opacity:1;
     }
 
+    /* TOGGLE BUTTON */
+    .tap-hint{ display:none; }
+    .tap-hint-outer{ display:none; }
+    .toggle-btn{
+      display:none;
+      position:absolute;
+      top:0; right:0;
+      z-index:15;
+      width:44px; height:44px;
+      background:rgb(0,255,255);
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      border:none;
+      padding:0;
+      flex-shrink:0;
+      transition:background .3s ease;
+    }
+    .visual-item.revealed .toggle-btn{
+      background:transparent;
+    }
+    .toggle-btn-icon{
+      position:relative;
+      width:18px; height:18px;
+    }
+    .toggle-btn-icon::before,
+    .toggle-btn-icon::after{
+      content:'';
+      position:absolute;
+      background:#000;
+      border-radius:1px;
+      transition:transform .25s ease;
+    }
+    .toggle-btn-icon::before{
+      width:2px; height:18px;
+      top:0; left:8px;
+    }
+    .toggle-btn-icon::after{
+      width:18px; height:2px;
+      top:8px; left:0;
+    }
+    .visual-item.revealed .toggle-btn-icon::before{
+      transform:rotate(45deg);
+    }
+    .visual-item.revealed .toggle-btn-icon::after{
+      transform:rotate(45deg);
+    }
+
     .art-closing{
       padding:14vh 0 16vh;
       position:relative;
@@ -945,6 +993,7 @@
         letter-spacing:.18em;
       }
       .art-closing-box{padding:24px 20px}
+      .toggle-btn{ display:flex; }
       .approach-grid{grid-template-columns:1fr !important;}
       #approach .container > div[style*="repeat(3"]{grid-template-columns:1fr !important;}
       .art-hero{
@@ -1421,6 +1470,7 @@
                 <div class="visual-item-data-desc">風の動きは、場所の記憶である。3次元の風速データを解析し、目に見えない大気の流れを、空間に残る形へ翻訳した。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text">WIND
 LINE</div></div>
@@ -1441,6 +1491,7 @@ LINE</div></div>
                 <div class="visual-item-data-desc">企業理念は、目に見えない。言語化された価値観を解体し、全長17mの壁面として空間に定着させた。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text">THE
 ORIGIN</div></div>
@@ -1461,6 +1512,7 @@ ORIGIN</div></div>
                 <div class="visual-item-data-desc">市民の行動は、都市の鼓動である。922個のリングとして圧縮し、その場に生まれた関係性そのものをビジュアル化した。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text" style="color:rgba(0,0,0,1);">CITIZEN
 ACTIONS</div></div>
@@ -1481,6 +1533,7 @@ ACTIONS</div></div>
                 <div class="visual-item-data-desc">日常の記録は、体験になる。ホテルスタッフの視点から生まれたデジタルオブジェクトを、ゲストが館内で発見する体験へ変換した。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text" style="color:rgba(0,0,0,0.8);">HOTEL
 DAILY LOG</div></div>
@@ -1501,6 +1554,7 @@ DAILY LOG</div></div>
                 <div class="visual-item-data-desc">所有の境界は、どこにあるか。1枚のキャンバスを59区域に分割し、NFTと物理作品を接続。デジタルと物理の共同所有という新しい関係性を設計した。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text" style="white-space:pre-line;color:rgba(255,255,255,0.8);">SHARED
 OWNER
@@ -1522,6 +1576,7 @@ SHIP</div></div>
                 <div class="visual-item-data-desc">AIのノイズが、絵画になる。拡散モデルの生成プロセスを「間（ま）」の概念と接続し、100号キャンバス2点として結晶化した。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text" style="color:rgba(220,221,221,0.8);">DIFFUSION
 MODEL</div></div>
@@ -1542,6 +1597,7 @@ MODEL</div></div>
                 <div class="visual-item-data-desc">運動はデータになり、データは絵画になる。AIがシミュレートした軌跡を起点に、技術文脈を持つ空間のための平面作品へ翻訳した。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text">MOTION
 DATA</div></div>
@@ -1562,6 +1618,7 @@ DATA</div></div>
                 <div class="visual-item-data-desc">非公開の数字が、かたちになる。キャッシュフロー・KPI・創業からの歩みを、シェイプド・キャンバスの輪郭として立体化した。</div>
               </div>
             </div>
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-result">
               <div class="visual-caption"><div class="visual-caption-text">PRIVATE
 DATA</div></div>
@@ -1716,6 +1773,16 @@ DATA</div></div>
         }
       });
     });
+
+    // TOGGLE BUTTON
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.closest('.visual-item').classList.toggle('revealed');
+      });
+    });
+
+
   </script>
 </body>
 </html>
