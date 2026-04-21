@@ -78,7 +78,7 @@ function getYearFromIdx(idx) {
 function drawLegend() {
   const W = getW(), H = getH();
   const P = getPAD();
-  const lx = P.left;
+  const isMobile = W < 600;
   const fs = Math.max(12, W * 0.013);
   const lineLen = W * 0.025;
   const gap = W * 0.003;
@@ -86,9 +86,11 @@ function drawLegend() {
 
   ctx.font = `700 ${fs}px "Helvetica Neue", Arial, sans-serif`;
 
-  // ACTUAL (上)
-  const isMobile = W < 600;
+  // スマホ: 右上、PC: 左上
+  const lx = isMobile ? W - P.right - lineLen - gap * 3 - ctx.measureText('FORECAST').width : P.left;
   const ly1 = isMobile ? P.top - H * 0.18 : P.top - H * 0.09;
+
+  // ACTUAL (上)
   ctx.beginPath();
   ctx.moveTo(lx, ly1); ctx.lineTo(lx + lineLen, ly1);
   ctx.strokeStyle = 'rgba(255,255,255,0.9)';
