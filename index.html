@@ -1768,11 +1768,10 @@ DATA</div></div>
     });
 
     // =========================
-    // MOBILE REVEAL CONTROL
-    // ======================
+    // REVEAL CONTROL
+    // ==============
     function showKnow(item) {
       item.classList.add('revealed');
-      // スマホのみインライン制御
       if (window.innerWidth <= 980) {
         const pic = item.querySelector('.visual-item-result picture');
         const vid = item.querySelector('.visual-item-result video');
@@ -1789,18 +1788,21 @@ DATA</div></div>
 
     function showLook(item) {
       item.classList.remove('revealed');
-      // スマホのみインライン制御（すべてクリアしてCSSに戻す）
       if (window.innerWidth <= 980) {
-        item.querySelectorAll('.visual-item-result picture, .visual-item-result video, .visual-item-result > img, .result-label, .visual-caption').forEach(el => {
-          el.style.removeProperty('opacity');
-        });
-        // pictureだけはデフォルトCSS opacity:0なのでインラインで0を明示
         const pic = item.querySelector('.visual-item-result picture');
+        const vid = item.querySelector('.visual-item-result video');
+        const img = item.querySelector('.visual-item-result > img');
+        const label = item.querySelector('.result-label');
+        const caption = item.querySelector('.visual-caption');
         if (pic) pic.style.opacity = '0';
+        if (vid) vid.style.removeProperty('opacity');
+        if (img) img.style.removeProperty('opacity');
+        if (label) label.style.removeProperty('opacity');
+        if (caption) caption.style.removeProperty('opacity');
       }
     }
 
-    // visual-item全体タップ → 展開（未展開時のみ）
+    // visual-item全体タップ → 展開（スマホ・未展開時のみ）
     document.querySelectorAll('.visual-item').forEach(item => {
       item.addEventListener('click', (e) => {
         if (window.innerWidth > 980) return;
@@ -1816,7 +1818,7 @@ DATA</div></div>
       });
     });
 
-    // ×ボタンタップ → 閉じる
+    // ＋/×ボタン → PC・スマホ共通でトグル
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
