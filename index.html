@@ -688,21 +688,25 @@
       opacity:0;
       transition:opacity .4s ease;
     }
+    /* revealed時: pictureを表示、caption/video/img を切り替え */
     .visual-item:hover .visual-item-result picture,
     .visual-item.revealed .visual-item-result picture{
-      opacity:1 !important;
-    }
-    .visual-item-result > img,
-    .visual-item-result > video{
-      transition:opacity .3s ease;
-    }
-    .visual-item:hover .visual-item-result > img,
-    .visual-item.revealed .visual-item-result > img{
-      opacity:0;
+      opacity:1;
     }
     .visual-item:hover .visual-item-result video,
     .visual-item.revealed .visual-item-result video{
       opacity:0;
+    }
+    .visual-item:hover .visual-caption,
+    .visual-item.revealed .visual-caption{
+      opacity:0;
+    }
+    .visual-item:hover .result-label,
+    .visual-item.revealed .result-label{
+      opacity:1;
+    }
+    .visual-item-result > img,
+    .visual-item-result > video{
       transition:opacity .3s ease;
     }
     .result-label{
@@ -721,10 +725,6 @@
       opacity:0;
       transition:opacity .3s ease .3s;
     }
-    .visual-item:hover .result-label,
-    .visual-item.revealed .result-label{
-      opacity:1;
-    }
 
     /* visual-captionのビジュアルは右パネルと共有、left側では不要 */
 
@@ -739,6 +739,7 @@
       padding:40px;
       pointer-events:none;
       transition:opacity .4s ease;
+      opacity:1;
     }
     .visual-caption-text{
       font-size:clamp(64px,14vw,200px);
@@ -750,14 +751,6 @@
       color:rgba(230,255,0,.55);
       width:100%;
       white-space:pre-line;
-    }
-    .visual-item:hover .visual-caption,
-    .visual-item.revealed .visual-caption{
-      opacity:0;
-    }
-    .visual-item:hover .overlay,
-    .visual-item.revealed .overlay{
-      opacity:1;
     }
 
     /* TOGGLE BUTTON */
@@ -944,6 +937,12 @@
       .visual-caption{
         position:absolute;
         inset:0;
+      }
+      .visual-item.revealed .visual-caption{
+        opacity:0 !important;
+      }
+      .visual-item.revealed .visual-item-result picture{
+        opacity:1 !important;
       }
       .visual-item-data-top,
       .visual-item-data-mid{
@@ -1768,39 +1767,28 @@ DATA</div></div>
     });
 
     // =========================
-    // REVEAL CONTROL
-    // ==============
-    function showKnow(item) {
-      item.classList.add('revealed');
-      // スマホ：captionを明示的に隠す（CSSの.revealedが効かない場合の補完）
-      if (window.innerWidth <= 980) {
-        const caption = item.querySelector('.visual-caption');
-        if (caption) caption.style.opacity = '0';
-      }
-    }
+    // REVEAL CONTROL - PC/スマホ共通、class操作のみ
+    // ================================================
+    function showKnow(item) { item.classList.add('revealed'); }
+    function showLook(item) { item.classList.remove('revealed'); }
 
-    function showLook(item) {
-      item.classList.remove('revealed');
-      if (window.innerWidth <= 980) {
-        const caption = item.querySelector('.visual-caption');
-        if (caption) caption.style.opacity = '1';
-      }
-    }
-
-    // visual-item全体タップ → 展開（スマホ・未展開時のみ）
+    // visual-item全体クリック → 展開（未展開時のみ）
     document.querySelectorAll('.visual-item').forEach(item => {
       item.addEventListener('click', () => {
-        if (window.innerWidth > 980) return;
         if (!item.classList.contains('revealed')) showKnow(item);
       });
     });
 
-    // ＋/×ボタン → PC・スマホ共通
+    // ＋/×ボタン → toggle（touchとclickの両方で確実に止める）
     document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const item = btn.closest('.visual-item');
-        item.classList.contains('revealed') ? showLook(item) : showKnow(item);
+      ['click','touchend'].forEach(evtName => {
+        btn.addEventListener(evtName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          const item = btn.closest('.visual-item');
+          item.classList.contains('revealed') ? showLook(item) : showKnow(item);
+        });
       });
     });
 
