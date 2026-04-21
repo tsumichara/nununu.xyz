@@ -14,10 +14,12 @@
       --max:1600px;
       --pad:48px;
 
-      --art-bg:#e6ff00;
+      --art-bg:#e8ecef;
+      --art-text:#0d1b1e;
+      --art-blue:#2a5daa;
       --art-text:#000000;
-      --art-accent:#ff00ff;
-      --art-cyan:#00ffff;
+      --art-accent:#e8795a;
+      --art-cyan:#00c2b8;
       --art-blue:#1d4fff;
     }
 
@@ -429,19 +431,25 @@
       position:relative;
       overflow:hidden;
     }
-    .art-bg-typo{
+    .art-bg-typo-vert{
       position:fixed;
-      font-size:24vw;
-      line-height:.8;
-      text-transform:uppercase;
-      z-index:0;
-      pointer-events:none;
-      opacity:.12;
-      white-space:nowrap;
-      font-style:italic;
+      right:0;
+      top:0;
+      bottom:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      writing-mode:vertical-rl;
+      font-size:16vw;
+      line-height:1;
       font-weight:900;
       letter-spacing:-.04em;
-      color:#000;
+      text-transform:uppercase;
+      font-style:italic;
+      color:rgba(0,194,184,.1);
+      pointer-events:none;
+      z-index:0;
+      white-space:nowrap;
     }
 
     .art-nav-space{
@@ -490,11 +498,6 @@
     .art-big.offset{margin-left:14vw}
     .art-big.shift{
       margin-left:5vw;
-      transform:rotate(-2.2deg);
-      display:inline-block;
-      background:#fff;
-      padding:.05em .12em .02em;
-      box-shadow:14px 14px 0 var(--art-accent);
     }
     .art-sub{
       margin-top:34px;
@@ -519,7 +522,7 @@
       bottom:0;
       width:100%;
       overflow:hidden;
-      background:#000;
+      background:#0d1b1e;
       color:var(--art-bg);
       border-top:3px solid #000;
       border-bottom:3px solid #000;
@@ -560,8 +563,8 @@
       background:#fff;
       border:4px solid #000;
       padding:28px;
-      box-shadow:22px 22px 0 var(--art-accent);
-      transform:rotate(-1.2deg);
+      
+      transform:rotate(0deg);
     }
     .art-statement h2{
       margin:0 0 18px;
@@ -596,15 +599,15 @@
       border:15px solid #000;
       background:#000;
       overflow:hidden;
-      transform:rotate(calc(var(--r) * 1deg));
-      box-shadow:34px 34px 0 var(--art-accent);
+      transform:rotate(0deg);
+      
       transition:transform .5s cubic-bezier(.175,.885,.32,1.275),
                  box-shadow .5s ease;
     }
     .visual-item:hover,
     .visual-item.revealed{
       transform:rotate(0deg);
-      box-shadow:20px 20px 0 var(--art-accent);
+      
     }
 
     /* 左パネル: 説明 — absoluteで左から展開 */
@@ -613,7 +616,7 @@
       top:0; left:0; bottom:0;
       width:0;
       overflow:hidden;
-      background:rgba(0,255,255,.95);
+      background:rgba(0,194,184,.95);
       color:#000;
       display:flex;
       flex-direction:column;
@@ -748,7 +751,7 @@
       text-transform:uppercase;
       line-height:.85;
       text-align:center;
-      color:rgba(230,255,0,.55);
+      color:rgba(0,194,184,.4);
       width:100%;
       white-space:pre-line;
     }
@@ -762,7 +765,7 @@
       top:0; right:0;
       z-index:15;
       width:33px; height:33px;
-      background:rgb(0,255,255);
+      background:#00c2b8;
       align-items:center;
       justify-content:center;
       cursor:pointer;
@@ -864,15 +867,16 @@
       color:#000;
     }
     body.art-active .nav{
-      background:rgba(230,255,0,.9);
-      border-color:#000;
+      background:rgba(232,236,239,.95);
+      border-color:rgba(0,194,184,.3);
+      color:#0d1b1e;
     }
     body.art-active .mode-switch{
       background:#fff;
       border-color:#000;
     }
     body.art-active .mode-switch button.active{
-      background:#000;
+      background:#0d1b1e;
       color:var(--art-bg);
     }
 
@@ -889,7 +893,7 @@
         width:94vw;
         aspect-ratio:auto;
         border-width:8px;
-        box-shadow:18px 18px 0 var(--art-accent);
+        
         display:block;
         min-height:0;
       }
@@ -1430,8 +1434,7 @@
        ART MODE
   ========================== -->
   <main id="artMode" class="mode art-mode">
-    <div class="art-bg-typo" style="top:8%; left:-2%;">LOOK FIRST.</div>
-    <div class="art-bg-typo" style="top:52%; right:-4%;">KNOW LATER.</div>
+    <div class="art-bg-typo-vert">LOOK FIRST.<br>KNOW LATER.</div>
 
     <section class="art-hero">
       <div class="container art-hero-inner">
@@ -1471,7 +1474,7 @@
       <div class="container">
 
         <div class="visual-stack">
-          <section class="visual-item" style="--r:-3" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: 3D_WIND_VECTOR_FIELD</div>
               <div class="visual-item-data-mid">
@@ -1492,7 +1495,7 @@ LINE</div></div>
             </div>
           </section>
 
-          <section class="visual-item" style="--r:2" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: CORPORATE_PHILOSOPHY</div>
               <div class="visual-item-data-mid">
@@ -1513,7 +1516,7 @@ ORIGIN</div></div>
             </div>
           </section>
 
-          <section class="visual-item" style="--r:-2" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: HUMAN_BEHAVIOR_DATA</div>
               <div class="visual-item-data-mid">
@@ -1534,7 +1537,7 @@ ACTIONS</div></div>
             </div>
           </section>
 
-          <section class="visual-item" style="--r:3" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: HOTEL_DAILY_LOG</div>
               <div class="visual-item-data-mid">
@@ -1555,7 +1558,7 @@ DAILY LOG</div></div>
             </div>
           </section>
 
-          <section class="visual-item" style="--r:-1" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: NFT_OWNERSHIP_STRUCTURE</div>
               <div class="visual-item-data-mid">
@@ -1577,7 +1580,7 @@ SHIP</div></div>
             </div>
           </section>
 
-          <section class="visual-item" style="--r:2" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: AI_GENERATIVE_PROCESS</div>
               <div class="visual-item-data-mid">
@@ -1598,7 +1601,7 @@ MODEL</div></div>
             </div>
           </section>
 
-          <section class="visual-item" style="--r:-2" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: MOTION_TRAJECTORY_ALGORITHM</div>
               <div class="visual-item-data-mid">
@@ -1619,7 +1622,7 @@ DATA</div></div>
             </div>
           </section>
 
-          <section class="visual-item" style="--r:3" tabindex="0">
+          <section class="visual-item" tabindex="0">
             <div class="visual-item-data">
               <div class="visual-item-data-top">INPUT: PRIVATE_KPI_DATA</div>
               <div class="visual-item-data-mid">
@@ -1757,14 +1760,7 @@ DATA</div></div>
     // =========================
     // ART TYPO PARALLAX
     // =========================
-    window.addEventListener('scroll', () => {
-      if (!document.body.classList.contains('art-active')) return;
-      const scrolled = window.pageYOffset;
-      document.querySelectorAll('.art-bg-typo').forEach((el, i) => {
-        const speed = (i + 1) * 0.18;
-        el.style.transform = `translateX(${(scrolled * speed) - 100}px) rotate(${-5 + (i * 5)}deg)`;
-      });
-    });
+
 
     // =========================
     // REVEAL CONTROL - PC/スマホ共通、class操作のみ
