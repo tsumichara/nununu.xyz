@@ -1781,11 +1781,9 @@ DATA</div></div>
 
     function showLook(item) {
       item.classList.remove('revealed');
-      // スマホ：インラインstyleをすべてクリア
       if (window.innerWidth <= 980) {
-        item.querySelectorAll('.visual-caption, .result-label').forEach(el => {
-          el.style.removeProperty('opacity');
-        });
+        const caption = item.querySelector('.visual-caption');
+        if (caption) caption.style.opacity = '1';
       }
     }
 
