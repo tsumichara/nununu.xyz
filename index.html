@@ -1475,8 +1475,8 @@
 
         <div class="visual-stack">
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: 3D_WIND_VECTOR_FIELD</div>
               <div class="visual-item-data-mid">
                 <h3>WIND<br>LINE</h3>
@@ -1496,8 +1496,8 @@ LINE</div></div>
           </section>
 
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: CORPORATE_PHILOSOPHY</div>
               <div class="visual-item-data-mid">
                 <h3>THE<br>ORIGIN</h3>
@@ -1517,8 +1517,8 @@ ORIGIN</div></div>
           </section>
 
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: HUMAN_BEHAVIOR_DATA</div>
               <div class="visual-item-data-mid">
                 <h3>CITIZEN<br>ACTIONS</h3>
@@ -1538,8 +1538,8 @@ ACTIONS</div></div>
           </section>
 
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: HOTEL_DAILY_LOG</div>
               <div class="visual-item-data-mid">
                 <h3>HOTEL<br>DAILY LOG</h3>
@@ -1559,8 +1559,8 @@ DAILY LOG</div></div>
           </section>
 
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: NFT_OWNERSHIP_STRUCTURE</div>
               <div class="visual-item-data-mid">
                 <h3>SHARED<br>OWNER<br>SHIP</h3>
@@ -1581,8 +1581,8 @@ SHIP</div></div>
           </section>
 
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: AI_GENERATIVE_PROCESS</div>
               <div class="visual-item-data-mid">
                 <h3>DIFFUSION<br>MODEL</h3>
@@ -1602,8 +1602,8 @@ MODEL</div></div>
           </section>
 
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: MOTION_TRAJECTORY_ALGORITHM</div>
               <div class="visual-item-data-mid">
                 <h3>MOTION<br>DATA</h3>
@@ -1623,8 +1623,8 @@ DATA</div></div>
           </section>
 
           <section class="visual-item" tabindex="0">
+            <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
             <div class="visual-item-data">
-              <button class="toggle-btn" aria-label="詳細を表示"><div class="toggle-btn-icon"></div></button>
               <div class="visual-item-data-top">INPUT: PRIVATE_KPI_DATA</div>
               <div class="visual-item-data-mid">
                 <h3>PRIVATE<br>DATA</h3>
@@ -1777,14 +1777,7 @@ DATA</div></div>
     function showKnow(item) { item.classList.add('revealed'); }
     function showLook(item) { item.classList.remove('revealed'); }
 
-    // visual-item全体クリック → 展開（未展開時のみ）
-    document.querySelectorAll('.visual-item').forEach(item => {
-      item.addEventListener('click', () => {
-        if (!item.classList.contains('revealed')) showKnow(item);
-      });
-    });
-
-    // ＋/×ボタン → toggle（touchとclickの両方で確実に止める）
+    // ＋/×ボタンのみでtoggle（visual-item全体のclickは廃止）
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       ['click','touchend'].forEach(evtName => {
         btn.addEventListener(evtName, (e) => {
