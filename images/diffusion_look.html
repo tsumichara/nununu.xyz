@@ -46,19 +46,19 @@ function drawLoadingCircle(W, H, rotation, alpha) {
   ctx.save();
   ctx.globalAlpha = alpha;
 
-  // 薄いベースリング
+  // ベースリング（白）
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.strokeStyle = 'rgba(255,255,255,0.85)';
   ctx.lineWidth = lw;
   ctx.stroke();
 
-  // 回転する弧
+  // 回転する黒い帯
   ctx.beginPath();
   ctx.arc(cx, cy, r, rotation, rotation + Math.PI * 1.3);
-  ctx.strokeStyle = '#fff';
-  ctx.lineWidth = lw;
-  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = lw + 0.5;
+  ctx.lineCap = 'butt';
   ctx.stroke();
 
   ctx.restore();
@@ -72,7 +72,6 @@ function draw() {
   const rot = frame * 0.07;
 
   if (phase === 0) {
-    // 黒背景 → 画像フェードイン、サークル表示
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, W, H);
     if (imgLoaded) {
@@ -80,31 +79,20 @@ function draw() {
       ctx.drawImage(img, 0, 0, W, H);
       ctx.globalAlpha = 1;
     }
-    // サークルはフェードインして途中からフェードアウト
-    const circleAlpha = p < 0.7 ? 1 : 1 - ((p - 0.7) / 0.3);
-    drawLoadingCircle(W, H, rot, circleAlpha);
-
   } else if (phase === 1) {
-    // クリア表示
     if (imgLoaded) ctx.drawImage(img, 0, 0, W, H);
-
   } else if (phase === 2) {
-    // 画像フェードアウト
     if (imgLoaded) {
       ctx.globalAlpha = 1 - p;
       ctx.drawImage(img, 0, 0, W, H);
       ctx.globalAlpha = 1;
     }
-    // サークルがフェードイン
-    const circleAlpha = p > 0.5 ? (p - 0.5) / 0.5 : 0;
-    drawLoadingCircle(W, H, rot, circleAlpha);
-
   } else {
-    // 黒休憩、サークル継続
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, W, H);
-    drawLoadingCircle(W, H, rot, 1);
   }
+  // サークルは常時表示
+  drawLoadingCircle(W, H, rot, 1);
 
   frame++;
   t++;
