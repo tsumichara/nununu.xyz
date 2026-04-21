@@ -130,17 +130,6 @@ function drawLine(data, color, glowColor, lineW, dashed, prog) {
   ctx.beginPath();
   ctx.moveTo(pts[0][0], pts[0][1]);
   for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-  ctx.strokeStyle = glowColor;
-  ctx.lineWidth = lineW * 4;
-  ctx.lineJoin = 'round';
-  ctx.setLineDash([]);
-  ctx.filter = 'blur(10px)';
-  ctx.stroke();
-  ctx.filter = 'none';
-
-  ctx.beginPath();
-  ctx.moveTo(pts[0][0], pts[0][1]);
-  for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
   ctx.strokeStyle = color;
   ctx.lineWidth = lineW;
   ctx.lineJoin = 'round';
