@@ -685,10 +685,19 @@
       inset:0;
       width:100%;
       height:100%;
+      transition:opacity .4s ease;
     }
     .visual-item:hover .visual-item-result picture,
     .visual-item.revealed .visual-item-result picture{
       opacity:1 !important;
+    }
+    .visual-item-result > img,
+    .visual-item-result > video{
+      transition:opacity .3s ease;
+    }
+    .visual-item:hover .visual-item-result > img,
+    .visual-item.revealed .visual-item-result > img{
+      opacity:0;
     }
     .visual-item:hover .visual-item-result video,
     .visual-item.revealed .visual-item-result video{
@@ -1758,27 +1767,44 @@ DATA</div></div>
     });
 
     // =========================
-    // TAP TO REVEAL FOR MOBILE
-    // =========================
+    // MOBILE REVEAL CONTROL
+    // ======================
+    function setRevealed(item, reveal) {
+      if (reveal) {
+        item.classList.add('revealed');
+      } else {
+        item.classList.remove('revealed');
+      }
+      const picture = item.querySelector('.visual-item-result picture');
+      if (picture) picture.style.opacity = reveal ? '1' : '0';
+    }
+
+    // visual-item全体タップ → 展開（未展開時のみ）
     document.querySelectorAll('.visual-item').forEach(item => {
-      item.addEventListener('click', () => {
-        if (window.innerWidth <= 980) {
-          item.classList.toggle('revealed');
+      item.addEventListener('click', (e) => {
+        if (window.innerWidth > 980) return;
+        if (!item.classList.contains('revealed')) {
+          setRevealed(item, true);
         }
       });
       item.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          item.classList.toggle('revealed');
+          setRevealed(item, !item.classList.contains('revealed'));
         }
       });
     });
 
-    // TOGGLE BUTTON
+    // ×ボタンタップ → 閉じる
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        btn.closest('.visual-item').classList.toggle('revealed');
+        const item = btn.closest('.visual-item');
+        if (item.classList.contains('revealed')) {
+          setRevealed(item, false);
+        } else {
+          setRevealed(item, true);
+        }
       });
     });
 
