@@ -689,7 +689,7 @@
       transition:opacity .4s ease;
     }
     .visual-item:hover .visual-item-result picture{
-      opacity:1;
+      opacity:1 !important;
     }
     .visual-item-result > img,
     .visual-item-result > video{
@@ -697,11 +697,11 @@
     }
     .visual-item:hover .visual-item-result > img,
     .visual-item.revealed .visual-item-result > img{
-      opacity:0;
+      opacity:0 !important;
     }
     .visual-item:hover .visual-item-result video,
     .visual-item.revealed .visual-item-result video{
-      opacity:0;
+      opacity:0 !important;
       transition:opacity .3s ease;
     }
     .result-label{
@@ -752,7 +752,7 @@
     }
     .visual-item:hover .visual-caption,
     .visual-item.revealed .visual-caption{
-      opacity:0;
+      opacity:0 !important;
     }
     .visual-item:hover .overlay,
     .visual-item.revealed .overlay{
@@ -767,7 +767,7 @@
       position:absolute;
       top:0; right:0;
       z-index:15;
-      width:22px; height:22px;
+      width:33px; height:33px;
       background:rgb(0,255,255);
       align-items:center;
       justify-content:center;
@@ -782,7 +782,7 @@
     }
     .toggle-btn-icon{
       position:relative;
-      width:10px; height:10px;
+      width:14px; height:14px;
     }
     .toggle-btn-icon::before,
     .toggle-btn-icon::after{
@@ -793,12 +793,12 @@
       transition:transform .25s ease;
     }
     .toggle-btn-icon::before{
-      width:2px; height:10px;
-      top:0; left:4px;
+      width:2px; height:14px;
+      top:0; left:6px;
     }
     .toggle-btn-icon::after{
-      width:10px; height:2px;
-      top:4px; left:0;
+      width:14px; height:2px;
+      top:6px; left:0;
     }
     .visual-item.revealed .toggle-btn-icon::before{
       transform:rotate(45deg);
