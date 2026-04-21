@@ -73,33 +73,36 @@ function drawLegend() {
   const W = getW(), H = getH();
   const P = getPAD();
   const lx = P.left;
-  const ly = P.top - H * 0.06;
-  const fs = Math.max(14, W * 0.014);
+  const fs = Math.max(12, W * 0.013);
   const lineLen = W * 0.025;
   const gap = W * 0.003;
+  const lineSpacing = fs * 2.2;
 
   ctx.font = `700 ${fs}px "Helvetica Neue", Arial, sans-serif`;
 
+  // ACTUAL (上)
+  const ly1 = P.top - H * 0.09;
   ctx.beginPath();
-  ctx.moveTo(lx, ly); ctx.lineTo(lx + lineLen, ly);
+  ctx.moveTo(lx, ly1); ctx.lineTo(lx + lineLen, ly1);
   ctx.strokeStyle = 'rgba(255,255,255,0.9)';
   ctx.lineWidth = Math.max(2, W * 0.003);
   ctx.setLineDash([]);
   ctx.stroke();
   ctx.fillStyle = 'rgba(255,255,255,0.65)';
   ctx.textAlign = 'left';
-  ctx.fillText('ACTUAL', lx + lineLen + gap * 3, ly + fs * 0.36);
+  ctx.fillText('ACTUAL', lx + lineLen + gap * 3, ly1 + fs * 0.36);
 
-  const fx = lx + W * 0.12;
+  // FORECAST (下)
+  const ly2 = ly1 + lineSpacing;
   ctx.beginPath();
-  ctx.moveTo(fx, ly); ctx.lineTo(fx + lineLen, ly);
+  ctx.moveTo(lx, ly2); ctx.lineTo(lx + lineLen, ly2);
   ctx.strokeStyle = '#00e5ff';
   ctx.lineWidth = Math.max(2, W * 0.003);
   ctx.setLineDash([8, 6]);
   ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle = 'rgba(0,229,255,0.65)';
-  ctx.fillText('FORECAST', fx + lineLen + gap * 3, ly + fs * 0.36);
+  ctx.fillText('FORECAST', lx + lineLen + gap * 3, ly2 + fs * 0.36);
 }
 
 function drawLine(data, color, glowColor, lineW, dashed, prog) {
