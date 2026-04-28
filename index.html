@@ -1153,7 +1153,7 @@
     .drawer-overlay.open{ opacity:1; pointer-events:auto; }
   </style>
 </head>
-<body>
+<body class="art-active">
   <header class="nav">
     <div class="container nav-inner">
       <button class="hamburger" id="hamburger" aria-label="メニュー" onclick="toggleDrawer()">
@@ -1162,7 +1162,7 @@
       <a class="brand" href="#" onclick="switchMode('business'); return false;">NU Inc.</a>
 
       <div class="nav-right">
-        <nav class="nav-links" id="businessNav">
+        <nav class="nav-links" id="businessNav" style="visibility:hidden;pointer-events:none;">
           <a href="#works">Works</a>
           <a href="#approach">Approach</a>
           <a href="#price">Price</a>
@@ -1171,8 +1171,8 @@
         </nav>
 
         <div class="mode-switch" aria-label="mode switch">
-          <button id="businessTab" class="active" type="button">Business</button>
-          <button id="artTab" type="button">Art</button>
+          <button id="businessTab" type="button">Business</button>
+          <button id="artTab" class="active" type="button">Art</button>
         </div>
       </div>
     </div>
@@ -1194,7 +1194,7 @@
   <!-- =========================
        BUSINESS MODE
   ========================== -->
-  <main id="businessMode" class="mode active">
+  <main id="businessMode" class="mode">
     <div class="hero-slideshow">
       <div class="hero-slides">
         <div class="hero-slide active">
@@ -1503,7 +1503,7 @@
   <!-- =========================
        ART MODE
   ========================== -->
-  <main id="artMode" class="mode art-mode">
+  <main id="artMode" class="mode art-mode active">
     <div class="art-bg-typo-vert">LOOK FIRST.<br>KNOW LATER.</div>
 
     <section class="art-hero">
@@ -1513,7 +1513,7 @@
           <h1 class="art-big offset shift">KNOW LATER.</h1>
 
           <div class="art-sub" style="border-left:6px solid #000;padding-left:20px;margin-top:40px;">
-            見た瞬間は、意味がわからない。触れると、それが風だったとわかる。人の動きだったとわかる。企業の数字だったとわかる。データから、空間や記憶に残るものを。それが NU Inc.の仕事です。
+            見た瞬間は、意味がわからない。触れると、それが風だったとわかる。人の動きだったとわかる。企業の数字だったとわかる。その場所に、固有の意味や物語を。
           </div>
         </div>
       </div>
@@ -1791,7 +1791,7 @@ DATA</div></div>
     <section class="art-closing">
       <div class="art-closing-box">
         <h3>LOOK FIRST.<br>KNOW LATER.</h3>
-        <p style="margin:32px auto 0;font-size:16px;font-weight:500;line-height:2;color:rgba(255,255,255,.7);text-align:center;">NU Inc. は、その場所に固有の物語や意味を残します。<br>案件になる前でも、お気軽にご相談ください。</p>
+        <p style="margin:32px auto 0;font-size:16px;font-weight:500;line-height:2;color:rgba(255,255,255,.7);text-align:center;">その場所に、固有の意味や物語を。<br>案件になる前でも、お気軽にご相談ください。</p>
         <div class="art-actions">
           <button class="art-button" type="button" onclick="switchMode('business', '#approach')">Back to Business</button>
           <button class="art-button" type="button" onclick="switchMode('business', '#contact')">Talk First</button>
